@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import './App.css';
 import Login from './login/Login'
+import Pricing from './pricing/Pricing'
+import Checkout from './checkout/Checkout'
 import {
   BrowserRouter as Router,
   Routes,
@@ -21,13 +23,17 @@ class App extends Component {
                 <Link to="/login">Login</Link>
               </li>
               <li>
-                <Link to="/contact">Contact Us</Link>
+                <Link to="/pricing">Pricing</Link>
+              </li>
+              <li>
+                <Link to="/checkout">Contact Us</Link>
               </li>
             </ul>
            <Routes>
                  {/* <Route exact path='/' element={< Home />}></Route> */}
                  <Route path='/login' element={< Login />}></Route>
-                 {/* <Route exact path='/contact' element={< Contact />}></Route> */}
+                 <Route path='/pricing' element={< Pricing />}></Route>
+                 <Route path='/checkout' element={< Checkout />}></Route>
           </Routes>
           </div>
        </Router>
