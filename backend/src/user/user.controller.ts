@@ -1,5 +1,6 @@
 import { ResponseToolkit, ServerRoute } from '@hapi/hapi';
 import { Request } from 'hapi';
+import { List } from 'lodash';
 import { RuleEngineModel } from './user.model';
 
 const getList: ServerRoute = {
@@ -44,16 +45,16 @@ const post: ServerRoute = {
       const users = await RuleEngineModel.find({ username: username, password: password })
         .then(_data => {
           console.log(_data)
-          return _data
+          return _data as Object;
         }).catch(
-          _err => {console.log("Network error!")
+          _err => {console.log("Network error!user controller")
           return {}
         }
           
         )
 
         return res.response({
-            data: (users as Array<any>).length != 0
+            userId: users || null
           }).code(201); 
       
 

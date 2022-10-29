@@ -1,7 +1,7 @@
 import mongoose, { Document, Model, Schema } from 'mongoose';
 
 export interface IRuleEngine {
-    id?: string;
+    userId?: string;
     username?: string;
     password?: string;
     status?: "Status";
@@ -13,6 +13,10 @@ export type RuleEngineDocument = IRuleEngine & Document;
 
 const ruleEngineSchema: Schema<RuleEngineDocument> = new Schema(
   {
+    userId: {
+      type: String,
+      required: true
+    },
     username: {
       type: String,
       required: true
@@ -46,7 +50,7 @@ ruleEngineSchema.set('toObject', {
 });
 
 export const RuleEngineModel: Model<RuleEngineDocument> = mongoose.model(
-  "constant.MODEL_NAME",
+  "user",
   ruleEngineSchema,
-  "constant.MODEL_NAME"
+  "user"
 );
