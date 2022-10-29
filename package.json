@@ -1,0 +1,24 @@
+{
+  "name": "netflix-renting",
+  "version": "1.0.0",
+  "description": "This repo contains netflixRenting project. Nice to meet you!",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/lehongduc200115/netflix-renting.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/lehongduc200115/netflix-renting/issues"
+  },
+  "homepage": "https://github.com/lehongduc200115/netflix-renting#readme",
+  "dependencies": {
+    "express": "^4.18.2"
+  }
+}
