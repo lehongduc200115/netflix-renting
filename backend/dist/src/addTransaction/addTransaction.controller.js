@@ -19,9 +19,9 @@ const post = {
             //   return res.response({
             //       data: (users as Array<any>).length != 0
             //     }).code(201); 
-            const { userId, package1, amount } = _request.payload;
+            const { username, package1, amount } = _request.payload;
             await addTransaction_model_1.RuleEngineModel
-                .create({ userId: userId, package1: package1, amount: amount, state: "false" })
+                .create({ username: username, package1: package1, amount: amount, state: "false" })
                 .then()
                 .catch(_err => { console.log("Network error!add transaction controller"); });
             return res.response({}).code(201);

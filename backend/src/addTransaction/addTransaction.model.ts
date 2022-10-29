@@ -28,7 +28,7 @@ const rulePackage1Schema: Schema<RulePackage1Document> = new Schema(
 
 
 export interface IRuleEngine {
-  userId?: String;
+  username?: String;
   package1?: Package1;
   amount?: Number;
   state?: boolean;
@@ -40,7 +40,7 @@ export type RuleEngineDocument = IRuleEngine & Document;
 
 const ruleEngineSchema: Schema<RuleEngineDocument> = new Schema(
   {
-    userId: {
+    username: {
       type: String,
       required: true
     },
@@ -77,7 +77,7 @@ rulePackage1Schema.set('toObject', {
 });
 
 export const RuleEngineModel: Model<RuleEngineDocument> = mongoose.model(
-  "addTransaction",
+  "Transaction",
   ruleEngineSchema,
-  "addTransaction"
+  "Transaction"
 );
