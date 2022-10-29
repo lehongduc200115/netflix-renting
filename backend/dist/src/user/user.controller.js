@@ -29,14 +29,23 @@ const get = {
 };
 const post = {
     method: 'POST',
-    path: `/user`,
+    path: `/login`,
     options: {
-        description: 'Post rule by id',
-        tags: ['api', 'Rule Engine'],
-        handler: async (_request, h) => {
-            user_model_1.RuleEngineModel.create({ name: 'small' });
-            return h.response({
-                data: "da tao"
+        description: 'Post login by username, passwd',
+        // return h.response({
+        //   data:"false"
+        // }).code(201); 
+        handler: async (_request, res) => {
+            const users = await user_model_1.RuleEngineModel.find({ username: "username1", password: "password1" })
+                .then(_data => {
+                console.log(_data);
+                return _data;
+            }).catch(_err => {
+                console.log("cannot find");
+                return {};
+            });
+            return res.response({
+                data: users.length != 0
             }).code(201);
         },
     }

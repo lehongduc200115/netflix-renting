@@ -2,8 +2,8 @@ import mongoose, { Document, Model, Schema } from 'mongoose';
 
 export interface IRuleEngine {
     id?: string;
-    name?: string;
-    applyTo?: string;
+    username?: string;
+    password?: string;
     status?: "Status";
     isTemplate?: boolean;
     createdBy?: string;
@@ -13,12 +13,13 @@ export type RuleEngineDocument = IRuleEngine & Document;
 
 const ruleEngineSchema: Schema<RuleEngineDocument> = new Schema(
   {
-    name: {
+    username: {
       type: String,
       required: true
     },
-    applyTo: {
+    password: {
       type: String,
+      minlength: 6
     },
     status: {
       type: String,

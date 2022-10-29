@@ -25,7 +25,7 @@ const get: ServerRoute = {
     handler: async (request: Request, h: ResponseToolkit) => {
       const data = await RuleEngineModel.findById(request.params.id);
       return h.response({
-        data:data
+        data: data
       }).code(200);
     },
   }
@@ -33,15 +33,30 @@ const get: ServerRoute = {
 
 const post: ServerRoute = {
   method: 'POST',
-  path: `/user`,
+  path: `/login`,
   options: {
-    description: 'Post rule by id',
-    tags: ['api', 'Rule Engine'],
-    handler: async (_request: Request, h: ResponseToolkit) => {
-      RuleEngineModel.create({ name: 'small' });
-      return h.response({
-        data:"da tao"
-      }).code(201);
+    description: 'Post login by username, passwd',
+    // return h.response({
+    //   data:"false"
+    // }).code(201); 
+    handler: async (_request: Request, res: ResponseToolkit) => {
+      const users = await RuleEngineModel.find({ username: "username1", password: "password1" })
+        .then(_data => {
+          console.log(_data)
+          return _data
+        }).catch(
+          _err => {console.log("Network error!")
+          return {}
+        }
+          
+        )
+
+        return res.response({
+            data: (users as Array<any>).length != 0
+          }).code(201); 
+      
+
+
     },
   }
 };
