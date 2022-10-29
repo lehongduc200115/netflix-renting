@@ -26,12 +26,13 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.RuleEngineModel = void 0;
 const mongoose_1 = __importStar(require("mongoose"));
 const ruleEngineSchema = new mongoose_1.Schema({
-    name: {
+    username: {
         type: String,
         required: true
     },
-    applyTo: {
+    password: {
         type: String,
+        minlength: 6
     },
     status: {
         type: String,
