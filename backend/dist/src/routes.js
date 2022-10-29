@@ -7,11 +7,14 @@ exports.routes = void 0;
 const ping_controller_1 = __importDefault(require("./ping/ping.controller"));
 const user_controller_1 = __importDefault(require("./user/user.controller"));
 const addTransaction_controller_1 = __importDefault(require("./addTransaction/addTransaction.controller"));
+const getTransaction_controller_1 = __importDefault(require("./getTransaction/getTransaction.controller"));
+const updateTransaction_controller_1 = __importDefault(require("./updateTransaction/updateTransaction.controller"));
 const routes = [
     ...ping_controller_1.default,
     ...user_controller_1.default,
     ...addTransaction_controller_1.default,
-    // ...ruleEngineController,
+    ...getTransaction_controller_1.default,
+    ...updateTransaction_controller_1.default,
     // ...campaignController
 ];
 exports.routes = routes;

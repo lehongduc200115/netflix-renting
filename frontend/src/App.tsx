@@ -18,6 +18,7 @@ import { Navigation } from './Navigation'
 // import { ProtectedRoute } from './ProtectedRoute'
 // import { useAuth } from './AuthProvider';
 import { login } from './login/Login';
+import AdminButton from './adminButton/AdminButton';
 
 // const AuthContext = React.createContext(null);
 
@@ -46,6 +47,7 @@ function App() {
           <Route path='/pricing' element={< Pricing />}></Route>
           {/* <Route path='/checkout' element={< Checkout />}></Route> */}
           <Route path='/register' element={< SignUp />}></Route>
+          <Route path='/activate' element={< AdminButton />}></Route>
           <Route
             path="checkout"
             element={

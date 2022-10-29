@@ -28,19 +28,17 @@ const mongoose_1 = __importStar(require("mongoose"));
 const ruleEngineSchema = new mongoose_1.Schema({
     username: {
         type: String,
-        required: true
+        required: true,
+        unique: true
     },
-    state: {
-        type: Boolean
-    },
-    id: {
+    accPwd: {
         type: String
     },
-    name: {
+    accName: {
         type: String
     },
-    price: {
-        type: String
+    slot: {
+        type: Number
     },
     createdBy: {
         type: String
@@ -48,9 +46,6 @@ const ruleEngineSchema = new mongoose_1.Schema({
     updatedBy: {
         type: String
     },
-    isTemplate: {
-        type: Boolean
-    }
 }, {
     timestamps: true,
     versionKey: false
@@ -58,8 +53,5 @@ const ruleEngineSchema = new mongoose_1.Schema({
 ruleEngineSchema.set('toObject', {
     virtuals: true
 });
-// rulePackage1Schema.set('toObject', {
-//   virtuals: true
-// });
-exports.RuleEngineModel = mongoose_1.default.model("Transaction", ruleEngineSchema, "Transaction");
-//# sourceMappingURL=addTransaction.model.js.map
+exports.RuleEngineModel = mongoose_1.default.model("netflixAcc", ruleEngineSchema, "netflixAcc");
+//# sourceMappingURL=addNetflixAcc.model.js.map

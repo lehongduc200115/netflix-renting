@@ -10,15 +10,31 @@ const post: ServerRoute = {
     description: 'Post change state user who paid',
     handler: async (_request: Request, res: ResponseToolkit) => {      
       const { username } = _request.payload as any;
-      const paid = await RuleEngineModel.findOne({username:username}).exec()
+      console.log(`usrname: ${username}`)
+      const paid = await RuleEngineModel.find({username:username}).sort({createdAt: -1}).exec()
       return res.response({
-        paid: paid
+        paid: paid[0]?.state
+      }).code(201);
+    },
+  }
+};
+const post1: ServerRoute = {
+  method: 'POST',
+  path: '/getTransactions',
+  options: {
+    description: 'Post change state user who paid',
+    handler: async (_request: Request, res: ResponseToolkit) => {      
+      // const { username } = _request.payload as any;
+      const transactions = await RuleEngineModel.find().sort({createdAt:-1}).limit(20).exec()
+      return res.response({
+        transactions: transactions
       }).code(201);
     },
   }
 };
 
-const ruleEngineController: ServerRoute[] = [
-  post
+const getTransactionController: ServerRoute[] = [
+  post,
+  post1
 ];
-export default ruleEngineController;
+export default getTransactionController;

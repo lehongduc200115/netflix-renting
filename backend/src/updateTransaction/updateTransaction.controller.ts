@@ -2,7 +2,6 @@ import { ResponseToolkit, ServerRoute } from '@hapi/hapi';
 import { Request } from 'hapi';
 import { RuleEngineModel } from '../addTransaction/addTransaction.model';
 
-import mongoose, { Document, Model, Schema } from 'mongoose';
 
 const post: ServerRoute = {
   method: 'POST',
@@ -10,17 +9,15 @@ const post: ServerRoute = {
   options: {
     description: 'Post change state user who paid',
     handler: async (_request: Request, res: ResponseToolkit) => {      
-      const { username } = _request.payload as any;
+      const { transactionId } = _request.payload as any;
       await RuleEngineModel
-        .findOneAndUpdate({username:username},{state:"true"})
-
-
-
-
+        .findOneAndUpdate({_id:transactionId},{state:"true"})
       return res.response({}).code(201);
     },
   }
 };
+
+
 
 const ruleEngineController: ServerRoute[] = [
   post

@@ -7,9 +7,9 @@ const post = {
     options: {
         description: 'Post change state user who paid',
         handler: async (_request, res) => {
-            const { userId } = _request.payload;
+            const { transactionId } = _request.payload;
             await addTransaction_model_1.RuleEngineModel
-                .findOneAndUpdate({ userId: userId }, { state: "true" });
+                .findOneAndUpdate({ _id: transactionId }, { state: "true" });
             return res.response({}).code(201);
         },
     }

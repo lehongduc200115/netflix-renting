@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React, { useState, useEffect } from 'react';
 import Typography from '@mui/material/Typography';
 import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
@@ -8,33 +8,69 @@ import { Box, BoxProps, } from "@mui/material";
 import { CircularProgress } from '@mui/material';
 import axios from 'axios';
 import Cookies from 'js-cookie';
-
+import { useAuth } from '../App'
 
 
 export default function OrderResult(package1: any) {
-  const state = {
-    userId: Cookies.get('userId') || 'ducle'
-  };
-  console.log(`package1: ${JSON.stringify(package1)}`)
-  package1 = package1.packageType
-  axios({
-    method: 'post',
-    url: 'http://localhost:8000/addTransaction',
-    data: {
-      username: state.userId,
-      package1: {
-        id: package1.id,
-        name: package1.name,
-        detail: {
-          price: package1.detail.price
+  const [paidStatus, setPaidStatus] = React.useState(false)
+  const [sendSuccessed, setSendSuccessed] = React.useState(false)
+  const [isLoading, setIsLoading] = useState(false);
+  const [isError, setIsError] = useState(false);
+
+  const { username } = useAuth();
+
+  const fetchData = async () => {
+    setIsLoading(true);
+    try {
+      const result = await axios({
+        method: 'post',
+        url: 'http://localhost:8000/getTransaction',
+        data: {
+          username: username || 'ducle'
         }
-      },
-      amount: package1.detail.price,
+      });
+
+      console.log(result)
+  
+      setPaidStatus(result.data.paid);
+    } catch (error) {
+      setIsError(true);
     }
-  }).then((data) => {
-    console.log(JSON.stringify(data.data))
-    // setIsLoggedIn(data.data.data)
-  });
+    setIsLoading(false);
+  };
+
+  useEffect(() => {
+    let interval = setInterval(() => {
+      fetchData()
+    }, 5000);
+
+    // fetchData()
+    return () => clearInterval(interval);
+  }, []);
+
+
+  if (!sendSuccessed) {
+    console.log(`package1: ${JSON.stringify(package1)}`)
+    package1 = package1.packageType
+    const body = {
+      username: username || 'ducle',
+      id: package1.id,
+      name: package1.name,
+      price: package1.detail.price,
+    }
+    console.log(`body: ${JSON.stringify(body)}`)
+    axios({
+      method: 'post',
+      url: 'http://localhost:8000/addTransaction',
+      data: body
+    }).then((data) => {
+      // console.log(JSON.stringify(data.data))
+      setSendSuccessed(!!data.data.username)
+    });
+
+  }
+
+
 
   return (
     <React.Fragment>
@@ -46,7 +82,7 @@ export default function OrderResult(package1: any) {
         confirmation, and will send you an update when your order has
         shipped.
       </Typography>
-      <CircularProgress />
+      {paidStatus ? 'paid roi' : <CircularProgress />}
       <Typography variant="h5" gutterBottom>
         We are validating your payment, please wait.
       </Typography>
