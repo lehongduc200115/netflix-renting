@@ -57,13 +57,14 @@ const postRegister: ServerRoute = {
     handler: async (_request: Request, res: ResponseToolkit) => {
       const {username, password, phone} = _request.payload as any;
       const users = await RuleEngineModel.findOne({ username: username}).exec()
+      console.log(`users: ${JSON.stringify(users)}`)
       let doc = null
-      if (users !==null) {
+      if (!users) {
         doc = await RuleEngineModel.create({username: username, password: password, phone: phone}) 
       }
         return res.response({
           username:  doc ? doc.username : null,
-          isExist: !users
+          isExist: !!users
           }).code(201); 
       
 

@@ -27,26 +27,39 @@ const get = {
         },
     }
 };
-const post = {
+const postLogin = {
     method: 'POST',
     path: `/login`,
     options: {
         description: 'Post login by username, passwd',
+        handler: async (_request, res) => {
+            const { username, password } = _request.payload;
+            const users = await user_model_1.RuleEngineModel.findOne({ username: username, password: password }).exec();
+            return res.response({
+                username: users ? users.username : null
+            }).code(201);
+        },
+    }
+};
+const postRegister = {
+    method: 'POST',
+    path: `/register`,
+    options: {
+        description: 'Post register by username, passwd',
         // return h.response({
         //   data:"false"
         // }).code(201); 
         handler: async (_request, res) => {
-            const { username, password } = _request.payload;
-            const users = await user_model_1.RuleEngineModel.find({ username: username, password: password })
-                .then(_data => {
-                console.log(_data);
-                return _data;
-            }).catch(_err => {
-                console.log("Network error!user controller");
-                return {};
-            });
+            const { username, password, phone } = _request.payload;
+            const users = await user_model_1.RuleEngineModel.findOne({ username: username }).exec();
+            console.log(`users: ${JSON.stringify(users)}`);
+            let doc = null;
+            if (!users) {
+                doc = await user_model_1.RuleEngineModel.create({ username: username, password: password, phone: phone });
+            }
             return res.response({
-                userId: users || null
+                username: doc ? doc.username : null,
+                isExist: !!users
             }).code(201);
         },
     }
@@ -54,7 +67,8 @@ const post = {
 const ruleEngineController = [
     getList,
     get,
-    post
+    postLogin,
+    postRegister
 ];
 exports.default = ruleEngineController;
 //# sourceMappingURL=user.controller.js.map

@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-const updateTransaction_model_1 = require("./updateTransaction.model");
+const addTransaction_model_1 = require("../addTransaction/addTransaction.model");
 const post = {
     method: 'POST',
     path: `/updateTransaction`,
@@ -8,7 +8,7 @@ const post = {
         description: 'Post change state user who paid',
         handler: async (_request, res) => {
             const { userId } = _request.payload;
-            await updateTransaction_model_1.RuleEngineModel
+            await addTransaction_model_1.RuleEngineModel
                 .findOneAndUpdate({ userId: userId }, { state: "true" });
             return res.response({}).code(201);
         },

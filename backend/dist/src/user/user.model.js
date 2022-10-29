@@ -26,13 +26,10 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.RuleEngineModel = void 0;
 const mongoose_1 = __importStar(require("mongoose"));
 const ruleEngineSchema = new mongoose_1.Schema({
-    userId: {
-        type: String,
-        required: true
-    },
     username: {
         type: String,
-        required: true
+        required: true,
+        unique: true
     },
     password: {
         type: String,
@@ -58,5 +55,5 @@ const ruleEngineSchema = new mongoose_1.Schema({
 ruleEngineSchema.set('toObject', {
     virtuals: true
 });
-exports.RuleEngineModel = mongoose_1.default.model("constant.user", ruleEngineSchema, "constant.user");
+exports.RuleEngineModel = mongoose_1.default.model("user", ruleEngineSchema, "user");
 //# sourceMappingURL=user.model.js.map

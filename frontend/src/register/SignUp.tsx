@@ -46,10 +46,9 @@ export default function SignUp() {
       }
     }).then((data) => {
       // console.log(data)
-      // console.log(`data.data: ${data.data.data}`)
+      console.log(`data.data: ${JSON.stringify(data.data)}`)
       setStatus({ isExist: data.data.isExist })
-      
-    });
+    }).catch(err => console.log(`err: ${err}`));
   };
 
   return (
