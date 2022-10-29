@@ -77,7 +77,7 @@ rulePackage1Schema.set('toObject', {
 });
 
 export const RuleEngineModel: Model<RuleEngineDocument> = mongoose.model(
-  "constant.addTransaction",
+  "addTransaction",
   ruleEngineSchema,
-  "constant.addTransaction"
+  "addTransaction"
 );
