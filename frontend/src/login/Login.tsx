@@ -12,9 +12,9 @@ import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
+import { useAuth } from '../App';
 
 import axios from 'axios';
-
 
 function Copyright(props: any) {
   return (
@@ -29,27 +29,39 @@ function Copyright(props: any) {
   );
 }
 
-const theme = createTheme();
+export async function login(username: string, password: string) {
+  return axios({
+    method: 'post',
+    url: 'http://localhost:8000/login',
+    data: {
+      username: username,
+      password: password
+    }
+  }).then((data) => {
+    return data.data.username
+  });
+}
 
-export default function SignIn() {
-  const [isLoggedIn, setIsLoggedIn] = React.useState(true);
+const theme = createTheme();
+export default function SignIn({ setUser }: any) {
+  // const [isLoggedIn, setIsLoggedIn] = React.useState(true);
+  const { onLogin } = useAuth();
+
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
-    // console.log({
-    //   email: data.get('email'),
-    //   password: data.get('password'),
+    // axios({
+    //   method: 'post',
+    //   url: 'http://localhost:8000/login',
+    //   data: {
+    //     username: data.get('email'),
+    //     password: data.get('password')
+    //   }
+    // }).then((data) => {
+    //   console.log(JSON.stringify(data.data))
+    //   setUser(data.data.username)
     // });
-    axios({
-      method: 'post',
-      url: 'http://localhost:8000/login',
-      data: { username: data.get('email'),
-    password: data.get('password') }
-    }).then((data) => {
-      // console.log(data)
-      // console.log(`data.data: ${data.data.data}`)
-      setIsLoggedIn(data.data.data)
-    });
+    onLogin(data.get('email'), data.get('password'))
   };
 
   return (
@@ -110,7 +122,7 @@ export default function SignIn() {
                 </Link>
               </Grid>
               <Grid item>
-                <Link href="#" variant="body2">
+                <Link href="/register" variant="body2">
                   {"Don't have an account? Sign Up"}
                 </Link>
               </Grid>
@@ -118,7 +130,7 @@ export default function SignIn() {
           </Box>
         </Box>
         <Copyright sx={{ mt: 8, mb: 4 }} />
-        { isLoggedIn ? 'vao roi' : 'khum vao duoc'}
+        {/* {isLoggedIn ? 'vao roi' : 'khum vao duoc'} */}
       </Container>
     </ThemeProvider>
   );

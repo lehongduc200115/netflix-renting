@@ -13,14 +13,15 @@ import Cookies from 'js-cookie';
 
 export default function OrderResult(package1: any) {
   const state = {
-    userId: Cookies.get('userId')
+    userId: Cookies.get('userId') || 'ducle'
   };
-
+  console.log(`package1: ${JSON.stringify(package1)}`)
+  package1 = package1.packageType
   axios({
     method: 'post',
     url: 'http://localhost:8000/addTransaction',
     data: {
-      userId: state.userId,
+      username: state.userId,
       package1: {
         id: package1.id,
         name: package1.name,
@@ -31,7 +32,7 @@ export default function OrderResult(package1: any) {
       amount: package1.detail.price,
     }
   }).then((data) => {
-    console.log(JSON.stringify(data.data.data))
+    console.log(JSON.stringify(data.data))
     // setIsLoggedIn(data.data.data)
   });
 
