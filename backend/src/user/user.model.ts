@@ -1,7 +1,6 @@
 import mongoose, { Document, Model, Schema } from 'mongoose';
 
 export interface IRuleEngine {
-    id?: string;
     username?: string;
     password?: string;
     status?: "Status";
@@ -12,10 +11,11 @@ export interface IRuleEngine {
 export type RuleEngineDocument = IRuleEngine & Document;
 
 const ruleEngineSchema: Schema<RuleEngineDocument> = new Schema(
-  {
+  {    
     username: {
       type: String,
-      required: true
+      required: true,      
+      unique: true
     },
     password: {
       type: String,
@@ -46,7 +46,7 @@ ruleEngineSchema.set('toObject', {
 });
 
 export const RuleEngineModel: Model<RuleEngineDocument> = mongoose.model(
-  "constant.MODEL_NAME",
+  "user",
   ruleEngineSchema,
-  "constant.MODEL_NAME"
+  "user"
 );

@@ -102,3 +102,9 @@
 2022-10-29 13:17:29:1729 [32minfo[39m: [32mLoading config from /home/ducle4/Desktop/playground-vscode/personal/netflix-renting/backend/dist/src/configs for local[39m
 2022-10-29 13:17:29:1729 [32minfo[39m: [32mServer is starting in /home/ducle4/Desktop/playground-vscode/personal/netflix-renting/backend/dist/src executed in /home/ducle4/Desktop/playground-vscode/personal/netflix-renting/backend[39m
 2022-10-29 13:17:30:1730 [32minfo[39m: [32m______      SERVER LISTENING AT   0.0.0.0:8000      ______[39m
+2022-10-29 15:27:34:2734 [32minfo[39m: [32mLoading config from C:\Users\chien\Desktop\2\netflix-renting\backend\dist\src/configs for local[39m
+2022-10-29 15:27:35:2735 [32minfo[39m: [32mServer is starting in C:\Users\chien\Desktop\2\netflix-renting\backend\dist\src executed in undefined[39m
+2022-10-29 15:27:36:2736 [32minfo[39m: [32m______      SERVER LISTENING AT   0.0.0.0:8000      ______[39m
+2022-10-29 17:18:49:1849 [32minfo[39m: [32mLoading config from C:\Users\chien\Desktop\2\netflix-renting\backend\dist\src/configs for local[39m
+2022-10-29 17:18:50:1850 [32minfo[39m: [32mServer is starting in C:\Users\chien\Desktop\2\netflix-renting\backend\dist\src executed in undefined[39m
+2022-10-29 17:18:50:1850 [32minfo[39m: [32m______      SERVER LISTENING AT   0.0.0.0:8000      ______[39m

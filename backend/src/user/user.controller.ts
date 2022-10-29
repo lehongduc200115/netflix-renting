@@ -1,5 +1,6 @@
 import { ResponseToolkit, ServerRoute } from '@hapi/hapi';
 import { Request } from 'hapi';
+import { List } from 'lodash';
 import { RuleEngineModel } from './user.model';
 
 const getList: ServerRoute = {
@@ -31,29 +32,38 @@ const get: ServerRoute = {
   }
 };
 
-const post: ServerRoute = {
+const postLogin: ServerRoute = {
   method: 'POST',
   path: `/login`,
   options: {
     description: 'Post login by username, passwd',
+    handler: async (_request: Request, res: ResponseToolkit) => {
+      const {username, password} = _request.payload as any;
+      const users = await RuleEngineModel.findOne({ username: username, password: password }).exec()      
+        return res.response({
+          username:  users ? users.username : null
+          }).code(201); 
+    },
+  }
+};
+const postRegister: ServerRoute = {
+  method: 'POST',
+  path: `/register`,
+  options: {
+    description: 'Post register by username, passwd',
     // return h.response({
     //   data:"false"
     // }).code(201); 
     handler: async (_request: Request, res: ResponseToolkit) => {
-      const {username, password} = _request.payload as any;
-      const users = await RuleEngineModel.find({ username: username, password: password })
-        .then(_data => {
-          console.log(_data)
-          return _data
-        }).catch(
-          _err => {console.log("Network error!")
-          return {}
-        }
-          
-        )
-
+      const {username, password, phone} = _request.payload as any;
+      const users = await RuleEngineModel.findOne({ username: username}).exec()
+      let doc = null
+      if (users !==null) {
+        doc = await RuleEngineModel.create({username: username, password: password, phone: phone}) 
+      }
         return res.response({
-            data: (users as Array<any>).length != 0
+          username:  doc ? doc.username : null,
+          isExist: !users
           }).code(201); 
       
 
@@ -65,6 +75,7 @@ const post: ServerRoute = {
 const ruleEngineController: ServerRoute[] = [
   getList,
   get,
-  post
+  postLogin,
+  postRegister
 ];
 export default ruleEngineController;

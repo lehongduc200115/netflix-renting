@@ -30,17 +30,14 @@ const ruleEngineSchema = new mongoose_1.Schema({
         type: String,
         required: true
     },
-    username: {
+    // package1: {
+    //   type: String,
+    // },
+    amount: {
         type: String,
-        required: true
     },
-    password: {
-        type: String,
-        minlength: 6
-    },
-    status: {
-        type: String,
-        index: true,
+    state: {
+        type: Boolean
     },
     createdBy: {
         type: String
@@ -58,5 +55,8 @@ const ruleEngineSchema = new mongoose_1.Schema({
 ruleEngineSchema.set('toObject', {
     virtuals: true
 });
-exports.RuleEngineModel = mongoose_1.default.model("constant.user", ruleEngineSchema, "constant.user");
-//# sourceMappingURL=user.model.js.map
+// rulePackage1Schema.set('toObject', {
+//   virtuals: true
+// });
+exports.RuleEngineModel = mongoose_1.default.model("constant.addTransaction", ruleEngineSchema, "constant.addTransaction");
+//# sourceMappingURL=addTransaction.model.js.map
