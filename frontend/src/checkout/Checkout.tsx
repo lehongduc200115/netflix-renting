@@ -18,7 +18,7 @@ import Review from './Review';
 import MomoQrCode from './MomoQrCode';
 import BankQrCode from './BankQrCode';
 import OrderResult from './OrderResult';
-import PACKAGE1 from '../constants/package.constant';
+import { PACKAGE1 } from '../constants/package.constant';
 
 function Copyright() {
   return (
