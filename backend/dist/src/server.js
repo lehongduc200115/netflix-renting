@@ -19,8 +19,8 @@ const createServer = async () => {
                 options: {
                     abortEarly: false,
                 },
-                // failAction: errorHandler
             },
+            cors: true,
         },
     });
     // Register routes

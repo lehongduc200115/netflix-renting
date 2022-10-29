@@ -42,10 +42,13 @@ export default function SignIn() {
     // });
     axios({
       method: 'post',
-      url: 'localhost:8000/user',
-      data: { data }
+      url: 'http://localhost:8000/login',
+      data: { username: data.get('email'),
+    password: data.get('password') }
     }).then((data) => {
-      console.log(data)
+      // console.log(data)
+      // console.log(`data.data: ${data.data.data}`)
+      setIsLoggedIn(data.data.data)
     });
   };
 

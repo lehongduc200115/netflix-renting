@@ -36,12 +36,15 @@ const post = {
         //   data:"false"
         // }).code(201); 
         handler: async (_request, res) => {
-            const users = await user_model_1.RuleEngineModel.find({ username: "username1", password: "password1" })
+            const { username, password } = _request.payload;
+            console.log(`username: ${username}`);
+            console.log(`password: ${password}`);
+            const users = await user_model_1.RuleEngineModel.find({ username: username, password: password })
                 .then(_data => {
                 console.log(_data);
                 return _data;
             }).catch(_err => {
-                console.log("cannot find");
+                console.log("Network error!");
                 return {};
             });
             return res.response({

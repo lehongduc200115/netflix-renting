@@ -40,7 +40,8 @@ const post: ServerRoute = {
     //   data:"false"
     // }).code(201); 
     handler: async (_request: Request, res: ResponseToolkit) => {
-      const users = await RuleEngineModel.find({ username: "username1", password: "password1" })
+      const {username, password} = _request.payload as any;
+      const users = await RuleEngineModel.find({ username: username, password: password })
         .then(_data => {
           console.log(_data)
           return _data
