@@ -23,8 +23,7 @@ const post: ServerRoute = {
           console.log("Network error!add transaction controller");
         });
         
-      await LoginHistoryModel.findOneAndUpdate({username: username},{$inc:{count:1} })
-      await BuyHistoryModel.findOneAndUpdate({id: id},{$inc:{count:1} })
+      await BuyHistoryModel.findOneAndUpdate({packageType: id},{$inc:{count:1} })
 
       return res.response({ username: result?.username }).code(201);
     },
