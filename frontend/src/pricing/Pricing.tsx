@@ -14,6 +14,7 @@ import Typography from '@mui/material/Typography';
 import Link from '@mui/material/Link';
 import GlobalStyles from '@mui/material/GlobalStyles';
 import Container from '@mui/material/Container';
+import {PACKAGE1} from '../constants/package.constant'
 
 function Copyright(props: any) {
   return (
@@ -30,67 +31,95 @@ function Copyright(props: any) {
 
 const tiers = [
   {
-    title: 'Free',
-    price: '0',
+    title: `${PACKAGE1.ONEDAY.name}`,
+    price: PACKAGE1.ONEDAY.detail.price,
     description: [
       '10 users included',
-      '2 GB of storage',
-      'Help center access',
-      'Email support',
+      
     ],
-    buttonText: 'Sign up for free',
-    buttonVariant: 'outlined',
-  },
-  {
-    title: 'Pro',
-    subheader: 'Most popular',
-    price: '15',
-    description: [
-      '20 users included',
-      '10 GB of storage',
-      'Help center access',
-      'Priority email support',
-    ],
-    buttonText: 'Get started',
+    buttonText: 'BUY',
     buttonVariant: 'contained',
   },
   {
-    title: 'Enterprise',
-    price: '30',
+    title: `${PACKAGE1.THREEDAYS.name}`,   
+    subheader: 'Most popular',
+    price: PACKAGE1.THREEDAYS.detail.price,
     description: [
-      '50 users included',
-      '30 GB of storage',
-      'Help center access',
-      'Phone & email support',
+      '10 users included',
+      
     ],
-    buttonText: 'Contact us',
-    buttonVariant: 'outlined',
-  },
-];
-const footers = [
-  {
-    title: 'Company',
-    description: ['Team', 'History', 'Contact us', 'Locations'],
+    buttonText: 'BUY',
+    buttonVariant: 'contained',
   },
   {
-    title: 'Features',
+    title: `${PACKAGE1.WEEK.name}`,
+    price: PACKAGE1.WEEK.detail.price,
     description: [
-      'Cool stuff',
-      'Random feature',
-      'Team feature',
-      'Developer stuff',
-      'Another one',
+      '10 users included',
+      
     ],
+    buttonText: 'BUY',
+    buttonVariant: 'contained',
   },
-  {
-    title: 'Resources',
-    description: ['Resource', 'Resource name', 'Another resource', 'Final resource'],
-  },
-  {
-    title: 'Legal',
-    description: ['Privacy policy', 'Terms of use'],
-  },
+  // {
+  //   title: `${PACKAGE1.MONTH.name}`,
+  //   price: PACKAGE1.MONTH.detail.price,
+  //   description: [
+  //     '10 users included',
+      
+  //   ],
+  //   buttonText: 'MUA',
+  //   buttonVariant: 'outlined',
+  // },
+  // {
+  //   title: 'Pro',
+  //   price: '21',
+  //   description: [
+  //     '20 users included',
+  //     '10 GB of storage',
+  //     'Help center access',
+  //     'Priority email support',
+  //   ],
+  //   buttonText: 'Get started',
+  //   buttonVariant: 'contained',
+  // },
+  // {
+  //   title: 'Enterprise',
+  //   price: '30',
+  //   description: [
+  //     '50 users included',
+  //     '30 GB of storage',
+  //     'Help center access',
+  //     'Phone & email support',
+  //   ],
+  //   buttonText: 'Contact us',
+  //   buttonVariant: 'outlined',
+  // },
 ];
+// const footers = [
+//   {
+//     title: 'Company',
+//     description: ['Team', 'History', 'Contact us', 'Locations'],
+//   },
+//   {
+//     title: 'Features',
+//     description: [
+//       'Cool stuff',
+//       'Random feature',
+//       'Team feature',
+//       'Developer stuff',
+//       'Another one',
+//     ],
+//   },
+//   {
+//     title: 'Resources',
+//     description: ['Resource', 'Resource name', 'Another resource', 'Final resource'],
+//   },
+//   {
+//     title: 'Legal',
+//     description: ['Privacy policy', 'Terms of use'],
+//   },
+// ];
 
 function PricingContent() {
   return (
@@ -193,11 +222,11 @@ function PricingContent() {
                     }}
                   >
                     <Typography component="h2" variant="h3" color="text.primary">
-                      ${tier.price}
+                      {tier.price}đ
                     </Typography>
-                    <Typography variant="h6" color="text.secondary">
+                    {/* <Typography variant="h6" color="text.secondary">
                       /mo
-                    </Typography>
+                    </Typography> */}
                   </Box>
                   <ul>
                     {tier.description.map((line) => (
@@ -226,7 +255,7 @@ function PricingContent() {
         </Grid>
       </Container>
       {/* Footer */}
-      <Container
+      {/* <Container
         maxWidth="md"
         component="footer"
         sx={{
@@ -254,7 +283,7 @@ function PricingContent() {
           ))}
         </Grid>
         <Copyright sx={{ mt: 5 }} />
-      </Container>
+      </Container> */}
       {/* End footer */}
     </React.Fragment>
   );
