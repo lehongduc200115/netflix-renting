@@ -1,6 +1,8 @@
 import { ResponseToolkit, ServerRoute } from "@hapi/hapi";
 import { Request } from "hapi";
 import { RuleEngineModel } from "./addTransaction.model";
+import { LoginHistoryModel } from '../history/loginhistory.model';
+import { BuyHistoryModel } from '../history/buyHistory.model';
 
 const post: ServerRoute = {
   method: "POST",
@@ -20,6 +22,10 @@ const post: ServerRoute = {
         .catch((_err) => {
           console.log("Network error!add transaction controller");
         });
+        
+      await LoginHistoryModel.findOneAndUpdate({username: username},{$inc:{count:1} })
+      await BuyHistoryModel.findOneAndUpdate({id: id},{$inc:{count:1} })
+
       return res.response({ username: result?.username }).code(201);
     },
   },

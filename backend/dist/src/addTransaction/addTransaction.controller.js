@@ -1,6 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 const addTransaction_model_1 = require("./addTransaction.model");
+const loginhistory_model_1 = require("../history/loginhistory.model");
+const buyHistory_model_1 = require("../history/buyHistory.model");
 const post = {
     method: "POST",
     path: `/addTransaction`,
@@ -19,6 +21,8 @@ const post = {
                 .catch((_err) => {
                 console.log("Network error!add transaction controller");
             });
+            await loginhistory_model_1.LoginHistoryModel.findOneAndUpdate({ username: username }, { $inc: { count: 1 } });
+            await buyHistory_model_1.BuyHistoryModel.findOneAndUpdate({ id: id }, { $inc: { count: 1 } });
             return res.response({ username: result === null || result === void 0 ? void 0 : result.username }).code(201);
         },
     },
