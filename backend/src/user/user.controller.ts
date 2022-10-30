@@ -40,7 +40,9 @@ const postLogin: ServerRoute = {
     description: 'Post login by username, passwd',
     handler: async (_request: Request, res: ResponseToolkit) => {
       const {username, password} = _request.payload as any;
-      const users = await RuleEngineModel.findOne({ username: username, password: password }).exec()      
+      const users = await RuleEngineModel.findOne({ username: username, password: password }).exec()    
+        if (!!users) 
+          await LoginHistoryModel.findOneAndUpdate({username: username},{$inc:{count:1} })   
         return res.response({
           username:  users ? users.username : null
           }).code(201); 
