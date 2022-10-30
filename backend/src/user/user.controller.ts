@@ -2,6 +2,7 @@ import { ResponseToolkit, ServerRoute } from '@hapi/hapi';
 import { Request } from 'hapi';
 import { List } from 'lodash';
 import { RuleEngineModel } from './user.model';
+import { LoginHistoryModel } from '../history/loginhistory.model';
 
 const getList: ServerRoute = {
   method: 'GET',
@@ -46,6 +47,7 @@ const postLogin: ServerRoute = {
     },
   }
 };
+
 const postRegister: ServerRoute = {
   method: 'POST',
   path: `/register`,
@@ -60,15 +62,13 @@ const postRegister: ServerRoute = {
       console.log(`users: ${JSON.stringify(users)}`)
       let doc = null
       if (!users) {
-        doc = await RuleEngineModel.create({username: username, password: password, phone: phone}) 
+        doc = await RuleEngineModel.create({username: username, password: password, phone: phone})
+        await LoginHistoryModel.create({username: username, count: 0})
       }
         return res.response({
           username:  doc ? doc.username : null,
           isExist: !!users
-          }).code(201); 
-      
-
-
+          }).code(201);      
     },
   }
 };
@@ -77,6 +77,6 @@ const ruleEngineController: ServerRoute[] = [
   getList,
   get,
   postLogin,
-  postRegister
+  postRegister,
 ];
 export default ruleEngineController;

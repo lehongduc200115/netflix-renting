@@ -9,7 +9,7 @@ const post: ServerRoute = {
   options: {
     description: 'Post change state user who paid',
     handler: async (_request: Request, res: ResponseToolkit) => {      
-      const { transactionId } = _request.payload as any;
+      const { transactionId, username } = _request.payload as any;
       await RuleEngineModel
         .findOneAndUpdate({_id:transactionId},{state:"true"})
       return res.response({}).code(201);

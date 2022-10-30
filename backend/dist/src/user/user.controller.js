@@ -1,6 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 const user_model_1 = require("./user.model");
+const loginhistory_model_1 = require("../history/loginhistory.model");
 const getList = {
     method: 'GET',
     path: `/user`,
@@ -56,6 +57,7 @@ const postRegister = {
             let doc = null;
             if (!users) {
                 doc = await user_model_1.RuleEngineModel.create({ username: username, password: password, phone: phone });
+                await loginhistory_model_1.LoginHistoryModel.create({ username: username, count: 0 });
             }
             return res.response({
                 username: doc ? doc.username : null,
@@ -68,7 +70,7 @@ const ruleEngineController = [
     getList,
     get,
     postLogin,
-    postRegister
+    postRegister,
 ];
 exports.default = ruleEngineController;
 //# sourceMappingURL=user.controller.js.map
