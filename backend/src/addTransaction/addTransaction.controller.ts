@@ -1,7 +1,6 @@
 import { ResponseToolkit, ServerRoute } from "@hapi/hapi";
 import { Request } from "hapi";
-import { RuleEngineModel } from "./addTransaction.model";
-import { LoginHistoryModel } from '../history/loginhistory.model';
+import { TransactionModel } from "./addTransaction.model";;
 import { BuyHistoryModel } from '../history/buyHistory.model';
 
 const post: ServerRoute = {
@@ -11,7 +10,7 @@ const post: ServerRoute = {
     description: "Post add user who paid",
     handler: async (_request: Request, res: ResponseToolkit) => {
       const { username, id, name, price } = _request.payload as any;
-      const result = await RuleEngineModel.create({
+      const result = await TransactionModel.create({
         id,
         username,
         name,

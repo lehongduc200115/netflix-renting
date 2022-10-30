@@ -4,7 +4,7 @@ import mongoose, { Document, Model, Schema } from 'mongoose';
 
 export interface IRuleEngine {
   username?: String;
-  id?: String;
+  id?: Number;
   name?: String;
   price?: String;
   state?: boolean;
@@ -14,7 +14,7 @@ export interface IRuleEngine {
 }
 export type RuleEngineDocument = IRuleEngine & Document;
 
-const ruleEngineSchema: Schema<RuleEngineDocument> = new Schema(
+const TransactionSchema: Schema<RuleEngineDocument> = new Schema(
   {
     username: {
       type: String,
@@ -24,7 +24,7 @@ const ruleEngineSchema: Schema<RuleEngineDocument> = new Schema(
       type: Boolean
     },
     id: {
-      type: String
+      type: Number
     },
     name: {
       type: String
@@ -48,15 +48,15 @@ const ruleEngineSchema: Schema<RuleEngineDocument> = new Schema(
   }
 );
 
-ruleEngineSchema.set('toObject', {
+TransactionSchema.set('toObject', {
   virtuals: true
 });
 // rulePackage1Schema.set('toObject', {
 //   virtuals: true
 // });
 
-export const RuleEngineModel: Model<RuleEngineDocument> = mongoose.model(
+export const TransactionModel: Model<RuleEngineDocument> = mongoose.model(
   "Transaction",
-  ruleEngineSchema,
+  TransactionSchema,
   "Transaction"
 );

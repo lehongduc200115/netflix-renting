@@ -1,7 +1,7 @@
 import mongoose, { Document, Model, Schema } from 'mongoose';
 
 export interface IRuleEngine {
-    pakageType?: string;
+    pakageType?: Number;
     count?: Number;
   }
 export type RuleEngineDocument = IRuleEngine & Document;
@@ -11,7 +11,6 @@ const buyHistorySchema: Schema<RuleEngineDocument> = new Schema(
     pakageType: {
       type: Number,
       required: true,      
-      unique: true
     },
     count: {
       type: Number,
