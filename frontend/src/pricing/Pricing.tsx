@@ -14,7 +14,11 @@ import Typography from '@mui/material/Typography';
 import Link from '@mui/material/Link';
 import GlobalStyles from '@mui/material/GlobalStyles';
 import Container from '@mui/material/Container';
-import {PACKAGE1} from '../constants/package.constant'
+import { PACKAGE1 } from '../constants/package.constant'
+import { useNavigate, NavigateOptions } from "react-router-dom";
+import axios from 'axios'
+import FlipNumbers from 'react-flip-numbers';
+
 
 function Copyright(props: any) {
   return (
@@ -29,73 +33,8 @@ function Copyright(props: any) {
   );
 }
 
-const tiers = [
-  {
-    title: `${PACKAGE1.ONEDAY.name}`,
-    price: PACKAGE1.ONEDAY.detail.price,
-    description: [
-      '10 users included',
-      
-    ],
-    buttonText: 'BUY',
-    buttonVariant: 'contained',
-  },
-  {
-    title: `${PACKAGE1.THREEDAYS.name}`,   
-    subheader: 'Most popular',
-    price: PACKAGE1.THREEDAYS.detail.price,
-    description: [
-      '10 users included',
-      
-    ],
-    buttonText: 'BUY',
-    buttonVariant: 'contained',
-  },
-  {
-    title: `${PACKAGE1.WEEK.name}`,
-    price: PACKAGE1.WEEK.detail.price,
-    description: [
-      '10 users included',
-      
-    ],
-    buttonText: 'BUY',
-    buttonVariant: 'contained',
-  },
-  // {
-  //   title: `${PACKAGE1.MONTH.name}`,
-  //   price: PACKAGE1.MONTH.detail.price,
-  //   description: [
-  //     '10 users included',
-      
-  //   ],
-  //   buttonText: 'MUA',
-  //   buttonVariant: 'outlined',
-  // },
-  // {
-  //   title: 'Pro',
-  //   price: '21',
-  //   description: [
-  //     '20 users included',
-  //     '10 GB of storage',
-  //     'Help center access',
-  //     'Priority email support',
-  //   ],
-  //   buttonText: 'Get started',
-  //   buttonVariant: 'contained',
-  // },
-  // {
-  //   title: 'Enterprise',
-  //   price: '30',
-  //   description: [
-  //     '50 users included',
-  //     '30 GB of storage',
-  //     'Help center access',
-  //     'Phone & email support',
-  //   ],
-  //   buttonText: 'Contact us',
-  //   buttonVariant: 'outlined',
-  // },
-];
+
+
 // const footers = [
 //   {
 //     title: 'Company',
@@ -122,51 +61,65 @@ const tiers = [
 // ];
 
 function PricingContent() {
+  const navigate = useNavigate()
+  let [peopleUsing, setPeopleUsing] = React.useState({
+    [PACKAGE1.ONEDAY.id]: 0,
+    [PACKAGE1.THREEDAYS.id]: 0,
+    [PACKAGE1.WEEK.id]: 0
+  });
+
+  React.useEffect(() => {
+    axios({
+      method: 'post',
+      url: 'http://localhost:8000/getBuyHistory'
+    }).then((data) => {
+      console.log(`data.data: ${JSON.stringify(data.data)}`)
+      // peopleUsing = (data.data)
+      setPeopleUsing(() => data.data)
+      console.log(`peopleUsing: ${JSON.stringify(peopleUsing)}`)
+    });
+  }, [])
+
+  const tiers = [
+    {
+      id: PACKAGE1.ONEDAY.id,
+      title: `${PACKAGE1.ONEDAY.name}`,
+      price: PACKAGE1.ONEDAY.detail.price,
+      description: [
+        '1 day using Netflix',
+        `Over ${peopleUsing[PACKAGE1.ONEDAY.id]} people using this plan`,
+      ],
+      buttonText: 'BUY',
+      buttonVariant: 'contained',
+    },
+    {
+      id: PACKAGE1.THREEDAYS.id,
+      title: `${PACKAGE1.THREEDAYS.name}`,
+      subheader: 'Most popular',
+      price: PACKAGE1.THREEDAYS.detail.price,
+      description: [
+        '3 days using Netflix',
+        `Over ${peopleUsing[PACKAGE1.THREEDAYS.id]} people using this plan`
+      ],
+      buttonText: 'BUY',
+      buttonVariant: 'contained',
+    },
+    {
+      id: PACKAGE1.WEEK.id,
+      title: `${PACKAGE1.WEEK.name}`,
+      price: PACKAGE1.WEEK.detail.price,
+      description: [
+        '1 week using Netflix',
+        `Over ${peopleUsing[PACKAGE1.WEEK.id]} people using this plan`
+      ],
+      buttonText: 'BUY',
+      buttonVariant: 'contained',
+    }
+  ];
   return (
     <React.Fragment>
       <GlobalStyles styles={{ ul: { margin: 0, padding: 0, listStyle: 'none' } }} />
       <CssBaseline />
-      <AppBar
-        position="static"
-        color="default"
-        elevation={0}
-        sx={{ borderBottom: (theme) => `1px solid ${theme.palette.divider}` }}
-      >
-        <Toolbar sx={{ flexWrap: 'wrap' }}>
-          <Typography variant="h6" color="inherit" noWrap sx={{ flexGrow: 1 }}>
-            Company name
-          </Typography>
-          <nav>
-            <Link
-              variant="button"
-              color="text.primary"
-              href="#"
-              sx={{ my: 1, mx: 1.5 }}
-            >
-              Features
-            </Link>
-            <Link
-              variant="button"
-              color="text.primary"
-              href="#"
-              sx={{ my: 1, mx: 1.5 }}
-            >
-              Enterprise
-            </Link>
-            <Link
-              variant="button"
-              color="text.primary"
-              href="#"
-              sx={{ my: 1, mx: 1.5 }}
-            >
-              Support
-            </Link>
-          </nav>
-          <Button href="#" variant="outlined" sx={{ my: 1, mx: 1.5 }}>
-            Login
-          </Button>
-        </Toolbar>
-      </AppBar>
       {/* Hero unit */}
       <Container disableGutters maxWidth="sm" component="main" sx={{ pt: 8, pb: 6 }}>
         <Typography
@@ -179,9 +132,7 @@ function PricingContent() {
           Pricing
         </Typography>
         <Typography variant="h5" align="center" color="text.secondary" component="p">
-          Quickly build an effective pricing table for your potential customers with
-          this layout. It&apos;s built with default MUI components with little
-          customization.
+          We provide Netflix access with the cheapest price on the market. Allow you to trial Netflix at the price of {PACKAGE1.ONEDAY.detail.price}
         </Typography>
       </Container>
       {/* End hero unit */}
@@ -193,7 +144,7 @@ function PricingContent() {
               item
               key={tier.title}
               xs={12}
-              sm={tier.title === 'Enterprise' ? 12 : 6}
+              sm={tier.title === PACKAGE1.THREEDAYS.name ? 12 : 6}
               md={4}
             >
               <Card>
@@ -201,7 +152,7 @@ function PricingContent() {
                   title={tier.title}
                   subheader={tier.subheader}
                   titleTypographyProps={{ align: 'center' }}
-                  action={tier.title === 'Pro' ? <StarIcon /> : null}
+                  action={tier.title === PACKAGE1.THREEDAYS.name ? <StarIcon /> : null}
                   subheaderTypographyProps={{
                     align: 'center',
                   }}
@@ -245,6 +196,12 @@ function PricingContent() {
                   <Button
                     fullWidth
                     variant={tier.buttonVariant as 'outlined' | 'contained'}
+                    onClick={() => {
+                      // const navigate = useNavigate();
+                      return navigate("/checkout", {
+                        state: tier,
+                      })
+                    }}
                   >
                     {tier.buttonText}
                   </Button>
@@ -253,6 +210,18 @@ function PricingContent() {
             </Grid>
           ))}
         </Grid>
+        {/* <div>
+        <FlipNumbers
+            height={12}
+            width={12}
+            color="red"
+            background="white"
+            numbers="12345"
+            perspective={100}
+            play={true}
+            numberStyles={{ color: "black" }}
+      />
+    </div> */}
       </Container>
       {/* Footer */}
       {/* <Container

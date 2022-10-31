@@ -3,35 +3,21 @@ export const PACKAGE1 = {
     id: 1,
     name: '1 day package',
     detail: {
-      price: 3000
-    }
-  },
-  TWODAYS: {
-    id: 2,
-    name: 'Two days package',
-    detail: {
-      price: 5000
+      price: '3.000'
     }
   },
   THREEDAYS: {
     id: 3,
-    name: '3 day package',
+    name: '3 days package',
     detail: {
-      price: 7000
+      price: '7.000'
     }
   },
   WEEK: {
     id: 7,
     name: '1 week package',
     detail: {
-      price: 15000
+      price: '15.000'
     }
   },
-  MONTH: {
-    id: 30,
-    name: '1 month package',
-    detail: {
-      price: 60000
-    }
-  }
 }

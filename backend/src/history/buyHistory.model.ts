@@ -1,7 +1,7 @@
 import mongoose, { Document, Model, Schema } from 'mongoose';
 
 export interface IRuleEngine {
-    pakageType?: Number;
+    pakageType?: String;
     count?: Number;
   }
 export type RuleEngineDocument = IRuleEngine & Document;
@@ -9,7 +9,7 @@ export type RuleEngineDocument = IRuleEngine & Document;
 const buyHistorySchema: Schema<RuleEngineDocument> = new Schema(
   {    
     pakageType: {
-      type: Number,
+      type: String,
       required: true,      
     },
     count: {

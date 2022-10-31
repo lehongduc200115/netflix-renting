@@ -15,10 +15,10 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 // import AddressForm from './AddressForm';
 // import PaymentForm from './PaymentForm';
 import Review from './Review';
-import MomoQrCode from './MomoQrCode';
-import BankQrCode from './BankQrCode';
 import OrderResult from './OrderResult';
 import { PACKAGE1 } from '../constants/package.constant';
+import { useNavigate, useLocation } from 'react-router-dom'
+import QrCode from './QrCode';
 
 function Copyright() {
   return (
@@ -33,16 +33,17 @@ function Copyright() {
   );
 }
 
-const steps = ['Shipping address', 'Payment details', 'Review your order'];
+const steps = ['Payment details', 'QR code'];
+// const steps = ['Payment details', 'QR code', 'Review your order'];
 
-function getStepContent(step: number) {
+function getStepContent(step: number, state: any, paymentMethod: PaymentMethod, setPaymentMethod: any) {
   switch (step) {
     case 0:
-      return <Review />;
+      return <Review tier={state} setPaymentMethod={setPaymentMethod} />;
     case 1:
-      return <MomoQrCode />;
-    case 2:
-      return <BankQrCode />;
+      return <QrCode paymentMethod={paymentMethod} />;
+    // case 2:
+    //   return <QrCode paymentMethod={paymentMethod} />;
     default:
       throw new Error('Unknown step');
   }
@@ -51,11 +52,16 @@ function getStepContent(step: number) {
 
 const theme = createTheme();
 
-enum PaymentMethod {
+export enum PaymentMethod {
   UNDEFINED, BANK, MOMO
 }
 
 export default function Checkout() {
+  const navigate = useNavigate()
+  const state = useLocation().state;
+
+  console.log('route', JSON.stringify(state))
+  // const params = route.params;
   const [activeStep, setActiveStep] = React.useState(0);
   const [paymentMethod, setPaymentMethod] = React.useState(PaymentMethod.UNDEFINED);
 
@@ -70,7 +76,7 @@ export default function Checkout() {
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
-      <AppBar
+      {/* <AppBar
         position="absolute"
         color="default"
         elevation={0}
@@ -81,10 +87,10 @@ export default function Checkout() {
       >
         <Toolbar>
           <Typography variant="h6" color="inherit" noWrap>
-            Company name
+            Account renting
           </Typography>
         </Toolbar>
-      </AppBar>
+      </AppBar> */}
       <Container component="main" maxWidth="sm" sx={{ mb: 4 }}>
         <Paper variant="outlined" sx={{ my: { xs: 3, md: 6 }, p: { xs: 2, md: 3 } }}>
           <Typography component="h1" variant="h4" align="center">
@@ -98,11 +104,18 @@ export default function Checkout() {
             ))}
           </Stepper>
           {activeStep === steps.length ? (
-            <OrderResult packageType={PACKAGE1.ONEDAY}></OrderResult>
+            <OrderResult packageType={state}></OrderResult>
           ) : (
             <React.Fragment>
-              {getStepContent(activeStep)}
+              {getStepContent(activeStep, state, paymentMethod, setPaymentMethod)}
               <Box sx={{ display: 'flex', justifyContent: 'flex-end' }}>
+                <Button
+                  variant="contained"
+                  onClick={() => navigate(-1)}
+                  sx={{ mt: 3, ml: 1 }}
+                >
+                  Choose other plan
+                </Button>
                 {activeStep !== 0 && (
                   <Button onClick={handleBack} sx={{ mt: 3, ml: 1 }}>
                     Back

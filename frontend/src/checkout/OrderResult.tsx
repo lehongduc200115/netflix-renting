@@ -9,9 +9,9 @@ import { CircularProgress } from '@mui/material';
 import axios from 'axios';
 import Cookies from 'js-cookie';
 import { useAuth } from '../App'
+import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 
-
-export default function OrderResult(package1: any) {
+export default function OrderResult({packageType}: any) {
   const [paidStatus, setPaidStatus] = React.useState(false)
   const [sendSuccessed, setSendSuccessed] = React.useState(false)
   const [isLoading, setIsLoading] = useState(false);
@@ -50,13 +50,13 @@ export default function OrderResult(package1: any) {
 
 
   if (!sendSuccessed) {
-    console.log(`package1: ${JSON.stringify(package1)}`)
-    package1 = package1.packageType
+    console.log(`package11: ${JSON.stringify(packageType)}`)
+    // packageType = packageType.packageType
     const body = {
-      username: username || 'ducle',
-      id: package1.id,
-      name: package1.name,
-      price: package1.detail.price,
+      username: username,
+      id: packageType.id,
+      name: packageType.title,
+      price: packageType.price,
     }
     console.log(`body: ${JSON.stringify(body)}`)
     axios({
@@ -64,13 +64,12 @@ export default function OrderResult(package1: any) {
       url: 'http://localhost:8000/addTransaction',
       data: body
     }).then((data) => {
-      // console.log(JSON.stringify(data.data))
       setSendSuccessed(!!data.data.username)
     });
 
   }
 
-
+  // setPaidStatus(true)
 
   return (
     <React.Fragment>
@@ -82,10 +81,24 @@ export default function OrderResult(package1: any) {
         confirmation, and will send you an update when your order has
         shipped.
       </Typography>
-      {paidStatus ? 'paid roi' : <CircularProgress />}
+
+      <div style={{
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+      }}>
+      {paidStatus ? <CheckCircleIcon color="success" sx={{ fontSize: 50 }}></CheckCircleIcon> : <CircularProgress />}
+      {/* <CheckCircleIcon color="success" sx={{ fontSize: 50 }}></CheckCircleIcon> */}
+      </div>
+      <div style={{
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+      }}>
       <Typography variant="h5" gutterBottom>
-        We are validating your payment, please wait.
+      {paidStatus ? 'Your order success! Please login via: ${}' : 'We are validating your payment, please wait.'} 
       </Typography>
+      </div>
     </React.Fragment>
   );
 }

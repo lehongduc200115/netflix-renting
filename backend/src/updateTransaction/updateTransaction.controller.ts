@@ -1,6 +1,6 @@
 import { ResponseToolkit, ServerRoute } from '@hapi/hapi';
 import { Request } from 'hapi';
-import { RuleEngineModel } from '../addTransaction/addTransaction.model';
+import { TransactionModel } from '../addTransaction/addTransaction.model';
 
 
 const post: ServerRoute = {
@@ -10,7 +10,7 @@ const post: ServerRoute = {
     description: 'Post change state user who paid',
     handler: async (_request: Request, res: ResponseToolkit) => {      
       const { transactionId, username } = _request.payload as any;
-      await RuleEngineModel
+      await TransactionModel
         .findOneAndUpdate({_id:transactionId},{state:"true"})
       return res.response({}).code(201);
     },
