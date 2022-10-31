@@ -23,9 +23,9 @@ var __importStar = (this && this.__importStar) || function (mod) {
     return result;
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.RuleEngineModel = void 0;
+exports.TransactionModel = void 0;
 const mongoose_1 = __importStar(require("mongoose"));
-const ruleEngineSchema = new mongoose_1.Schema({
+const TransactionSchema = new mongoose_1.Schema({
     username: {
         type: String,
         required: true
@@ -34,7 +34,7 @@ const ruleEngineSchema = new mongoose_1.Schema({
         type: Boolean
     },
     id: {
-        type: String
+        type: Number
     },
     name: {
         type: String
@@ -55,11 +55,11 @@ const ruleEngineSchema = new mongoose_1.Schema({
     timestamps: true,
     versionKey: false
 });
-ruleEngineSchema.set('toObject', {
+TransactionSchema.set('toObject', {
     virtuals: true
 });
 // rulePackage1Schema.set('toObject', {
 //   virtuals: true
 // });
-exports.RuleEngineModel = mongoose_1.default.model("Transaction", ruleEngineSchema, "Transaction");
+exports.TransactionModel = mongoose_1.default.model("Transaction", TransactionSchema, "Transaction");
 //# sourceMappingURL=addTransaction.model.js.map

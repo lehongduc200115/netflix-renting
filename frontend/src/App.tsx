@@ -51,9 +51,9 @@ function App() {
           <Route
             path="checkout"
             element={
-              // <ProtectedRoute>
+              <ProtectedRoute>
                 <Checkout />
-              // </ProtectedRoute>
+              </ProtectedRoute>
             }
           />
           <Route path="*" element={< Login />}></Route>
@@ -89,14 +89,11 @@ const AuthProvider = ({ children }: any) => {
     console.log(`userName: ${usr}`)
     if (usr) {
       setUsername(usr);
-      const origin = location.state?.from?.pathname || '/checkout';
+      // const origin = location.state?.from?.pathname || '/pricing';
+      const origin = '/pricing';
       console.log(`origin: ${origin}`)
       navigate(origin);
     }
-    // setUsername(usr);
-    // const origin = location.state?.from?.pathname || '/dashboard';
-    // console.log(`origin: ${origin}`)
-    // navigate(origin);
   };
 
   const handleLogout = () => {

@@ -48,7 +48,7 @@ const postBuyHistory: ServerRoute = {
     handler: async (_request: Request, res: ResponseToolkit) => {
      // const {username} = _request.payload as any;
       const data = await BuyHistoryModel.find().limit(20).exec()      
-      console.log()
+      console.log("1")
         return res.response({
           
           [PACKAGE1.ONEDAY.id]: data[0].count,

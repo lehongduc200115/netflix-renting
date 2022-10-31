@@ -36,6 +36,8 @@ const postLogin = {
         handler: async (_request, res) => {
             const { username, password } = _request.payload;
             const users = await user_model_1.RuleEngineModel.findOne({ username: username, password: password }).exec();
+            if (!!users)
+                await loginhistory_model_1.LoginHistoryModel.findOneAndUpdate({ username: username }, { $inc: { count: 1 } });
             return res.response({
                 username: users ? users.username : null
             }).code(201);

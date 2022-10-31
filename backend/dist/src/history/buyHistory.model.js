@@ -27,9 +27,8 @@ exports.BuyHistoryModel = void 0;
 const mongoose_1 = __importStar(require("mongoose"));
 const buyHistorySchema = new mongoose_1.Schema({
     pakageType: {
-        type: Number,
+        type: String,
         required: true,
-        unique: true
     },
     count: {
         type: Number,

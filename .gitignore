@@ -2,5 +2,6 @@
 /backend/.env
 /backend/logs
 /node_modules
+/test
 
 /frontend/node_modules

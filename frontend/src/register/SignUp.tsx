@@ -13,6 +13,7 @@ import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import axios from 'axios'
+import { useNavigate } from 'react-router-dom';
 
 function Copyright(props: any) {
   return (
@@ -30,6 +31,7 @@ function Copyright(props: any) {
 const theme = createTheme();
 
 export default function SignUp() {
+  const navigate = useNavigate()
   const [status, setStatus] = React.useState({
     isExist: false
   })
@@ -48,6 +50,9 @@ export default function SignUp() {
       // console.log(data)
       console.log(`data.data: ${JSON.stringify(data.data)}`)
       setStatus({ isExist: data.data.isExist })
+      if (!data.data.isExist) {
+        navigate('/login')
+      }
     }).catch(err => console.log(`err: ${err}`));
   };
 

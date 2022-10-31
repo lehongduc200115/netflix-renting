@@ -41,7 +41,7 @@ const postBuyHistory = {
         handler: async (_request, res) => {
             // const {username} = _request.payload as any;
             const data = await buyHistory_model_1.BuyHistoryModel.find().limit(20).exec();
-            console.log();
+            console.log("1");
             return res.response({
                 [package_constant_1.PACKAGE1.ONEDAY.id]: data[0].count,
                 [package_constant_1.PACKAGE1.TWODAYS.id]: data[1].count,
