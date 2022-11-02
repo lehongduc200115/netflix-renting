@@ -4,13 +4,15 @@ import { UserModel } from "./user.model";
 import { LoginHistoryModel } from "../history/loginhistory.model";
 import { HttpMethod, HttpStatus } from "../common/httpConstant";
 
+import jwt  from 'jsonwebtoken';
+
 const getList: ServerRoute = {
   method: HttpMethod.GET,
   path: `/user`,
   options: {
     description: "Get all users",
     tags: ["api", "User"],
-    handler: async (_request: Request, h: ResponseToolkit) => {
+    handler: async (request: Request, h: ResponseToolkit) => {
       const data = await UserModel.find({});
       return h.response(data).code(HttpStatus.OK);
     },
@@ -39,22 +41,35 @@ const login: ServerRoute = {
   path: `/login`,
   options: {
     description: "Post login by email, passwd",
+    auth: false,
     handler: async (request: Request, res: ResponseToolkit) => {
       const { email, password } = request.payload as any;
       const users = await UserModel.findOne({
         email: email,
         password: password,
       }).exec();
-      if (!!users)
+      if (!!users){
         await LoginHistoryModel.findOneAndUpdate(
           { email: email },
           { $inc: { count: 1 } }
         );
-      return res
+        const token = jwt.sign(email, 'TOP_SECRET', { expiresIn: '30m' }) ;
+        return res
         .response({
-          email: users ? users.email : null,
+          valid: true,
+          token,
         })
         .code(HttpStatus.OK);
+      }
+      else{
+        return res
+        .response({
+          valid: false,
+        })
+        .code(HttpStatus.OK);
+      }
+        
+      
     },
   },
 };
@@ -64,6 +79,7 @@ const register: ServerRoute = {
   path: `/register`,
   options: {
     description: "Register new user",
+    auth: false,
     handler: async (request: Request, res: ResponseToolkit) => {
       const { email, password, phone } = request.payload as any;
       const users = await UserModel.findOne({ email: email }).exec();
@@ -89,9 +105,10 @@ const register: ServerRoute = {
 
 const verify: ServerRoute = {
   method: HttpMethod.GET,
-  path: `/user/verify`,
+  path: `/user/verify`,  
   options: {
     description: "Verify user by emailing",
+    auth: 'jwt',
     handler: async (request: Request, res: ResponseToolkit) => {
       const { email } = request.query as any;
       const foundUser = await UserModel.findOneAndUpdate(

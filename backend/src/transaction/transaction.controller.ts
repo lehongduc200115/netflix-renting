@@ -10,6 +10,7 @@ const post: ServerRoute = {
   path: `/${constant.TRANSACTION_PATH}`,
   options: {
     description: "Post add user who paid",
+    auth: 'jwt',
     handler: async (request: Request, res: ResponseToolkit) => {
       const { email, id, name, price } = request.payload as any;
       console.log(`id vao: ${id}`)

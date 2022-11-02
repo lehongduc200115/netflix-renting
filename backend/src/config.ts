@@ -4,7 +4,7 @@ import { merge } from 'lodash';
 
 import logger from './logger';
 
-
+const secretkey = 'secretkey';
 dotenv.config();
 const env = process.env.NODE_ENV;
 const configDir = `${__dirname}/configs`;
@@ -62,4 +62,8 @@ export const loadConfigs = (): any => {
   return merged;
 };
 
+
 export default loadConfigs();
+
+
+

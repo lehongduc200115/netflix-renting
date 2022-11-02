@@ -11,7 +11,7 @@ const routes = [
   ...transactionController,
   ...historyController,
   ...emailController,
-  ...accountController,
+  ...accountController,//
 ];
 
 export { routes };

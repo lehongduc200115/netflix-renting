@@ -6,6 +6,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.start = exports.init = void 0;
 const hapi_1 = require("@hapi/hapi");
 const config_1 = __importDefault(require("./config"));
+const Jwt = require('@hapi/jwt');
 const mongoDb_1 = require("./common/mongoDb");
 // import Swagger from './hapiPlugins/swagger';
 const routes_1 = require("./routes");
@@ -23,6 +24,12 @@ const createServer = async () => {
             cors: true,
         },
     });
+    server.register(Jwt);
+    server.auth.strategy('jwt', 'jwt', {
+        key: 'chien',
+        verifyOptions: { algorithms: ['HS256'] }
+    });
+    server.auth.default('jwt');
     // Register routes
     server.route(routes_1.routes);
     return server;

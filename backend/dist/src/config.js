@@ -8,6 +8,7 @@ const dotenv_1 = __importDefault(require("dotenv"));
 const fs_1 = require("fs");
 const lodash_1 = require("lodash");
 const logger_1 = __importDefault(require("./logger"));
+const secretkey = 'secretkey';
 dotenv_1.default.config();
 const env = process.env.NODE_ENV;
 const configDir = `${__dirname}/configs`;

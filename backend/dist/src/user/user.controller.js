@@ -36,6 +36,7 @@ const login = {
     path: `/login`,
     options: {
         description: "Post login by email, passwd",
+        auth: false,
         handler: async (request, res) => {
             const { email, password } = request.payload;
             const users = await user_model_1.UserModel.findOne({
@@ -57,6 +58,7 @@ const register = {
     path: `/register`,
     options: {
         description: "Register new user",
+        auth: 'jwt',
         handler: async (request, res) => {
             const { email, password, phone } = request.payload;
             const users = await user_model_1.UserModel.findOne({ email: email }).exec();
@@ -86,8 +88,6 @@ const verify = {
         description: "Verify user by emailing",
         handler: async (request, res) => {
             const { email } = request.query;
-            // const users = await UserModel.findOne({ email: email }).exec();
-            // console.log(`users: ${JSON.stringify(users)}`);
             const foundUser = await user_model_1.UserModel.findOneAndUpdate({
                 email: email,
                 isVerified: false,

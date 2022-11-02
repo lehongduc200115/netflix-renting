@@ -11,6 +11,7 @@ const postInitHistory: ServerRoute = {
   path: `/initHistory`,
   options: {
     description: 'Post get login history',
+    auth: 'jwt',
     handler: async (_request: Request, res: ResponseToolkit) => {
      // const {email} = request.payload as any;
        await BuyHistoryModel.create({pakageType:1,count:0})
@@ -30,6 +31,7 @@ const postHistory: ServerRoute = {
   path: `/getLoginHistory`,
   options: {
     description: 'Post get login history',
+    auth: 'jwt',
     handler: async (_request: Request, res: ResponseToolkit) => {
      // const {email} = request.payload as any;
       const data = await LoginHistoryModel.find().limit(20).exec()      
@@ -45,6 +47,7 @@ const postBuyHistory: ServerRoute = {
   path: `/getBuyHistory`,
   options: {
     description: 'Post get buy history',
+    auth: 'jwt',
     handler: async (_request: Request, res: ResponseToolkit) => {
      // const {email} = request.payload as any;
       const data = await BuyHistoryModel.find().limit(20).exec()      

@@ -9,8 +9,8 @@ var SortFieldEnum;
 })(SortFieldEnum = exports.SortFieldEnum || (exports.SortFieldEnum = {}));
 var SortTypeEnum;
 (function (SortTypeEnum) {
-    SortTypeEnum["ASCENDING"] = "ASC";
-    SortTypeEnum["DESCENDING"] = "DESC";
+    SortTypeEnum["ASCENDING"] = "asc";
+    SortTypeEnum["DESCENDING"] = "desc";
 })(SortTypeEnum = exports.SortTypeEnum || (exports.SortTypeEnum = {}));
 var Status;
 (function (Status) {

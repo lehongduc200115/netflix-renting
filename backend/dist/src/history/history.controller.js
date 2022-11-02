@@ -8,6 +8,7 @@ const postInitHistory = {
     path: `/initHistory`,
     options: {
         description: 'Post get login history',
+        auth: 'jwt',
         handler: async (_request, res) => {
             // const {email} = request.payload as any;
             await buyHistory_model_1.BuyHistoryModel.create({ pakageType: 1, count: 0 });

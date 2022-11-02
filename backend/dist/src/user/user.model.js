@@ -49,6 +49,11 @@ const userSchema = new mongoose_1.Schema({
         required: true,
         index: true,
     },
+    isAccountOwner: {
+        type: Boolean,
+        default: false,
+        index: true,
+    },
     createdBy: {
         type: String,
     },

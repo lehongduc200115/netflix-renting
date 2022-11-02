@@ -1,11 +1,16 @@
 import { Server } from "@hapi/hapi";
 import config from "./config";
 
+import { Request } from "hapi";
+
+import { routes } from "./routes";
 import { connectMongo } from "./common/mongoDb";
 // import Swagger from './hapiPlugins/swagger';
 
-import { routes } from "./routes";
 import logger from "./logger";
+import { validateJWT} from './auth'
+//import { validateBasic} from './auth'
+
 
 const createServer = async () => {
   const server = new Server({
@@ -20,6 +25,19 @@ const createServer = async () => {
       cors: true,
     },
   });
+  
+
+  //add from here
+  await server.register(require("hapi-auth-jwt2"));
+  //await server.register(require("@hapi/basic"));
+  //server.auth.strategy('simple', 'basic', {validate:validateBasic})
+  server.auth.strategy('jwt', 'jwt', {
+    key: 'getMeFromEnvFile', 
+    validate: validateJWT,
+  });
+
+  
+  server.auth.default('jwt');
 
   // Register routes
   server.route(routes);
