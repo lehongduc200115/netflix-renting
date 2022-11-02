@@ -4,14 +4,15 @@ import jwt  from 'jsonwebtoken';
 
 
 export const validateJWT = async (request: Request, _h: ResponseToolkit) => {
-    var user = null
-    user = jwt.verify(request.headers.accessToken, 'TOP_SECRET');
-    if (!user){
-       // user?['token'] =  null;
-        return { isValid: false };
-    } else {
-        return { isValid: true, credentials: request.headers.accessToken  };;
+    try {
+        jwt.verify(request.headers.accessToken, 'TOP_SECRET');
+        return { isValid: true};
     }
+    catch {
+
+        return { isValid: false };
+
+    }    
     
 };
 

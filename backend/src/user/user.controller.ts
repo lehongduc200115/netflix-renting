@@ -53,7 +53,7 @@ const login: ServerRoute = {
           { email: email },
           { $inc: { count: 1 } }
         );
-        const token = jwt.sign(email, 'TOP_SECRET', { expiresIn: '30m' }) ;
+        const token = jwt.sign({email: email}, 'TOP_SECRET', { expiresIn: '30m' }) ;
         return res
         .response({
           valid: true,
