@@ -5,8 +5,8 @@ export enum SortFieldEnum {
 }
 
 export enum SortTypeEnum {
-  ASCENDING = 'ASC',
-  DESCENDING = 'DESC'
+  ASCENDING = 'asc',
+  DESCENDING = 'desc'
 }
 
 export enum Status {

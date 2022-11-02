@@ -1,13 +1,15 @@
 import mongoose, { Document, Model, ObjectId, Schema } from "mongoose";
 import { AccountType } from "./account.enum";
 import config from "../config"
+import { Status } from "../common/enum";
 
 export interface IAccount {
   email: string;
   username: string;
   password: string;
   slot: number;
-  type: AccountType;
+  status?: Status,
+  type?: AccountType;
   ownTo?: string;
   createdBy?: string;
   updatedBy?: string;
@@ -28,6 +30,15 @@ const accountSchema: Schema<AccountDocument> = new Schema(
     username: {
       type: String,
       required: true,
+    },
+    type: {
+      type: String,
+      required: true,
+      default: AccountType.NETFLIX
+    },
+    status: {
+      type: String,
+      default: Status.ACTIVE,
     },
     slot: {
       type: Number,

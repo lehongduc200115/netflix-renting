@@ -94,8 +94,6 @@ const verify: ServerRoute = {
     description: "Verify user by emailing",
     handler: async (request: Request, res: ResponseToolkit) => {
       const { email } = request.query as any;
-      // const users = await UserModel.findOne({ email: email }).exec();
-      // console.log(`users: ${JSON.stringify(users)}`);
       const foundUser = await UserModel.findOneAndUpdate(
         {
           email: email,

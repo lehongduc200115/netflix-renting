@@ -64,9 +64,9 @@ export default function OrderResult({packageType}: any) {
       const sendMail = async () => {
         const result2 = await axios({
           method: 'post',
-          url: 'http://localhost:8000/sendMail',
+          url: 'http://localhost:8000/email/sendAccount',
           data: {
-            email: email || 'ducle'
+            email: email
           }
         });
   
