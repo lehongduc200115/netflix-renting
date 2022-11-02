@@ -1,84 +1,119 @@
-import { ResponseToolkit, ServerRoute } from '@hapi/hapi';
-import { Request } from 'hapi';
-import { List } from 'lodash';
-import { RuleEngineModel } from './user.model';
-import { LoginHistoryModel } from '../history/loginhistory.model';
+import { ResponseToolkit, ServerRoute } from "@hapi/hapi";
+import { Request } from "hapi";
+import { UserModel } from "./user.model";
+import { LoginHistoryModel } from "../history/loginhistory.model";
+import { HttpMethod, HttpStatus } from "../common/httpConstant";
 
 const getList: ServerRoute = {
-  method: 'GET',
+  method: HttpMethod.GET,
   path: `/user`,
   options: {
-    description: 'Get rules',
-    tags: ['api', 'Rule Engine'],
+    description: "Get all users",
+    tags: ["api", "User"],
     handler: async (_request: Request, h: ResponseToolkit) => {
-      const data = await RuleEngineModel.find({
-      });
-      return h.response(data).code(200);
-    }
-  }
+      const data = await UserModel.find({});
+      return h.response(data).code(HttpStatus.OK);
+    },
+  },
 };
 
 const get: ServerRoute = {
-  method: 'GET',
+  method: HttpMethod.GET,
   path: `/user/{id}`,
   options: {
-    description: 'Get rule by id',
-    tags: ['api', 'Rule Engine'],
+    description: "Get user by id",
+    tags: ["api", "User"],
     handler: async (request: Request, h: ResponseToolkit) => {
-      const data = await RuleEngineModel.findById(request.params.id);
-      return h.response({
-        data: data
-      }).code(200);
+      const data = await UserModel.findById(request.params.id);
+      return h
+        .response({
+          data: data,
+        })
+        .code(200);
     },
-  }
+  },
 };
 
-const postLogin: ServerRoute = {
-  method: 'POST',
+const login: ServerRoute = {
+  method: HttpMethod.POST,
   path: `/login`,
   options: {
-    description: 'Post login by username, passwd',
-    handler: async (_request: Request, res: ResponseToolkit) => {
-      const {username, password} = _request.payload as any;
-      const users = await RuleEngineModel.findOne({ username: username, password: password }).exec()    
-        if (!!users) 
-          await LoginHistoryModel.findOneAndUpdate({username: username},{$inc:{count:1} })   
-        return res.response({
-          username:  users ? users.username : null
-          }).code(201); 
+    description: "Post login by email, passwd",
+    handler: async (request: Request, res: ResponseToolkit) => {
+      const { email, password } = request.payload as any;
+      const users = await UserModel.findOne({
+        email: email,
+        password: password,
+      }).exec();
+      if (!!users)
+        await LoginHistoryModel.findOneAndUpdate(
+          { email: email },
+          { $inc: { count: 1 } }
+        );
+      return res
+        .response({
+          email: users ? users.email : null,
+        })
+        .code(HttpStatus.OK);
     },
-  }
+  },
 };
 
-const postRegister: ServerRoute = {
-  method: 'POST',
+const register: ServerRoute = {
+  method: HttpMethod.POST,
   path: `/register`,
   options: {
-    description: 'Post register by username, passwd',
-    // return h.response({
-    //   data:"false"
-    // }).code(201); 
-    handler: async (_request: Request, res: ResponseToolkit) => {
-      const {username, password, phone} = _request.payload as any;
-      const users = await RuleEngineModel.findOne({ username: username}).exec()
-      console.log(`users: ${JSON.stringify(users)}`)
-      let doc = null
+    description: "Register new user",
+    handler: async (request: Request, res: ResponseToolkit) => {
+      const { email, password, phone } = request.payload as any;
+      const users = await UserModel.findOne({ email: email }).exec();
+      console.log(`users: ${JSON.stringify(users)}`);
+      let doc = null;
       if (!users) {
-        doc = await RuleEngineModel.create({username: username, password: password, phone: phone})
-        await LoginHistoryModel.create({username: username, count: 0})
+        doc = await UserModel.create({
+          email: email,
+          password: password,
+          phone: phone,
+        });
+        await LoginHistoryModel.create({ email: email, count: 0 });
       }
-        return res.response({
-          username:  doc ? doc.username : null,
-          isExist: !!users
-          }).code(201);      
+      return res
+        .response({
+          email: doc ? doc.email : null,
+          isExist: !!users,
+        })
+        .code(HttpStatus.CREATED);
     },
-  }
+  },
 };
 
-const ruleEngineController: ServerRoute[] = [
-  getList,
-  get,
-  postLogin,
-  postRegister,
-];
-export default ruleEngineController;
+const verify: ServerRoute = {
+  method: HttpMethod.GET,
+  path: `/user/verify`,
+  options: {
+    description: "Verify user by emailing",
+    handler: async (request: Request, res: ResponseToolkit) => {
+      const { email } = request.query as any;
+      // const users = await UserModel.findOne({ email: email }).exec();
+      // console.log(`users: ${JSON.stringify(users)}`);
+      const foundUser = await UserModel.findOneAndUpdate(
+        {
+          email: email,
+          isVerified: false,
+        },
+        {
+          isVerified: true,
+        }
+      );
+
+      return res
+        .response({
+          isVerified: !!foundUser,
+        })
+        .code(HttpStatus.OK);
+    },
+  },
+};
+
+const userController: ServerRoute[] = [getList, get, login, register, verify];
+export default userController;

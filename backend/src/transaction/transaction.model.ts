@@ -2,21 +2,20 @@ import { boolean } from 'joi';
 import mongoose, { Document, Model, Schema } from 'mongoose';
 
 
-export interface IRuleEngine {
-  username?: String;
+export interface ITransaction {
+  email: String;
   id?: Number;
   name?: String;
   price?: String;
   state?: boolean;
-  isTemplate?: boolean;
   createdBy?: String;
   updatedBy?: String;
 }
-export type RuleEngineDocument = IRuleEngine & Document;
+export type TransactionDocument = ITransaction & Document;
 
-const TransactionSchema: Schema<RuleEngineDocument> = new Schema(
+const TransactionSchema: Schema<TransactionDocument> = new Schema(
   {
-    username: {
+    email: {
       type: String,
       required: true
     },
@@ -38,9 +37,6 @@ const TransactionSchema: Schema<RuleEngineDocument> = new Schema(
     updatedBy: {
       type: String
     },
-    isTemplate: {
-      type: Boolean
-    }
   },
   {
     timestamps: true,
@@ -51,12 +47,8 @@ const TransactionSchema: Schema<RuleEngineDocument> = new Schema(
 TransactionSchema.set('toObject', {
   virtuals: true
 });
-// rulePackage1Schema.set('toObject', {
-//   virtuals: true
-// });
 
-export const TransactionModel: Model<RuleEngineDocument> = mongoose.model(
-  "Transaction",
+export const TransactionModel: Model<TransactionDocument> = mongoose.model(
+  "transaction",
   TransactionSchema,
-  "Transaction"
 );

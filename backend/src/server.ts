@@ -51,6 +51,7 @@ export const start = async (module: NodeModule) => {
       })
       .catch((err) => {
         logger.error("Server cannot start", err.stack);
+        console.log(err)
         logger.on("finish", () => {
           process.exit(1);
         });

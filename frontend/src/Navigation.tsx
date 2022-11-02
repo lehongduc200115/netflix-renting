@@ -8,7 +8,7 @@ import Button from '@mui/material/Button';
 import { useAuth } from "./App";
 
 export const Navigation = () => {
-  const { username, onLogout } = useAuth();
+  const { email, onLogout } = useAuth();
 
   return (
 
@@ -59,7 +59,7 @@ export const Navigation = () => {
     //   <NavLink to="/pricing">Pricing</NavLink>
     //   <NavLink to="/checkout">Checkout</NavLink>
     //   <NavLink to="/register">Sign Up</NavLink>
-    //   {username && (
+    //   {email && (
     //     <button type="button" onClick={onLogout}>
     //       Sign Out
     //     </button>

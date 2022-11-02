@@ -23,14 +23,14 @@ import AdminButton from './adminButton/AdminButton';
 // const AuthContext = React.createContext(null);
 
 function App() {
-  const [username, setUsername] = useState(null);
+  const [email, setUsername] = useState(null);
   // const handleLogin = async () => {
   //   setUsername('ducle')
   // }
   // const handleLogout = () => {
   //   setUsername(null);
   // };
-  // if (!username) {
+  // if (!email) {
   //   return <Login setUser={setUsername} />
   // }
 
@@ -38,7 +38,7 @@ function App() {
   return (
 
     <Router>
-      <AuthProvider value={username}>
+      <AuthProvider value={email}>
         {/* <Router> */}
         <Navigation></Navigation>
         <Routes>
@@ -65,10 +65,10 @@ function App() {
   // }
 }
 const ProtectedRoute = ({ children }: any) => {
-  const { username } = useAuth();
+  const { email } = useAuth();
   const location = useLocation();
 
-  if (!username) {
+  if (!email) {
     return <Navigate to="/home" replace state={{ from: location }} />;
   }
 
@@ -81,11 +81,11 @@ const AuthProvider = ({ children }: any) => {
   const navigate = useNavigate();
   const location = useLocation();
 
-  const [username, setUsername] = React.useState(null);
+  const [email, setUsername] = React.useState(null);
 
-  const handleLogin = async (username: string, password: string) => {
+  const handleLogin = async (email: string, password: string) => {
     console.log('handle login')
-    const usr = await login(username, password);
+    const usr = await login(email, password);
     console.log(`userName: ${usr}`)
     if (usr) {
       setUsername(usr);
@@ -101,7 +101,7 @@ const AuthProvider = ({ children }: any) => {
   };
 
   const value = {
-    username,
+    email,
     onLogin: handleLogin,
     onLogout: handleLogout,
   };

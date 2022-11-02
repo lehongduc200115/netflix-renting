@@ -16,23 +16,35 @@ export default function OrderResult({packageType}: any) {
   const [sendSuccessed, setSendSuccessed] = React.useState(false)
   const [isLoading, setIsLoading] = useState(false);
   const [isError, setIsError] = useState(false);
+  const [isResultReturned, setIsResultReturned] = useState(false);
 
-  const { username } = useAuth();
+  const { email } = useAuth();
 
   const fetchData = async () => {
     setIsLoading(true);
     try {
       const result = await axios({
-        method: 'post',
-        url: 'http://localhost:8000/getTransaction',
-        data: {
-          username: username || 'ducle'
-        }
+        method: 'GET',
+        url: `http://localhost:8000/transaction/${encodeURIComponent(email)}`,
       });
 
       console.log(result)
   
       setPaidStatus(result.data.paid);
+      // console.log('paidStatus:', paidStatus)
+      // // setIsResultReturned(result.data.paid);
+      // if (paidStatus) {
+      //   const result2 = await axios({
+      //     method: 'post',
+      //     url: 'http://localhost:8000/sendMail',
+      //     data: {
+      //       email: email || 'ducle'
+      //     }
+      //   });
+  
+      //   console.log('result2:', result2)
+
+      // }
     } catch (error) {
       setIsError(true);
     }
@@ -40,20 +52,40 @@ export default function OrderResult({packageType}: any) {
   };
 
   useEffect(() => {
-    let interval = setInterval(() => {
-      fetchData()
-    }, 5000);
+    if (!paidStatus) {
+      let interval = setInterval(() => {
+        fetchData()
+      }, 5000);
+  
+      // fetchData()
+      return () => clearInterval(interval);
+    }
+    if (paidStatus) {
+      const sendMail = async () => {
+        const result2 = await axios({
+          method: 'post',
+          url: 'http://localhost:8000/sendMail',
+          data: {
+            email: email || 'ducle'
+          }
+        });
+  
+        console.log('result2:', result2)
+      }
+      sendMail();
+    }
+  }, [paidStatus]);
 
-    // fetchData()
-    return () => clearInterval(interval);
-  }, []);
+//   useEffect(() => {
+//     // action on update of movies
+// }, [movies]);
 
 
   if (!sendSuccessed) {
     console.log(`package11: ${JSON.stringify(packageType)}`)
     // packageType = packageType.packageType
     const body = {
-      username: username,
+      email: email,
       id: packageType.id,
       name: packageType.title,
       price: packageType.price,
@@ -61,10 +93,10 @@ export default function OrderResult({packageType}: any) {
     console.log(`body: ${JSON.stringify(body)}`)
     axios({
       method: 'post',
-      url: 'http://localhost:8000/addTransaction',
+      url: 'http://localhost:8000/transaction',
       data: body
     }).then((data) => {
-      setSendSuccessed(!!data.data.username)
+      setSendSuccessed(!!data.data.email)
     });
 
   }
@@ -96,7 +128,7 @@ export default function OrderResult({packageType}: any) {
         justifyContent: 'center',
       }}>
       <Typography variant="h5" gutterBottom>
-      {paidStatus ? 'Your order success! Please login via: ${}' : 'We are validating your payment, please wait.'} 
+      {paidStatus ? 'Your order success! Please check your email' : 'We are validating your payment, please wait.'} 
       </Typography>
       </div>
     </React.Fragment>

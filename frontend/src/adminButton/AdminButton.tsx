@@ -11,8 +11,8 @@ const theme = createTheme();
 const columns: GridColDef[] = [
   { field: '_id', headerName: 'transactionId', width: 220 },
   {
-    field: 'username',
-    headerName: 'username',
+    field: 'email',
+    headerName: 'email',
     width: 150,
   },
   {
@@ -66,7 +66,7 @@ export default function AdminButton() {
   //   if (selected) {
   //     axios({
   //       method: 'post',
-  //       url: 'http://localhost:8000/updateTransaction',
+  //       url: 'http://localhost:8000/transaction/pay',
   //       body: {
   //         transactionId: selected
   //       },
@@ -78,8 +78,8 @@ export default function AdminButton() {
   // }
   const handler = (e: any) => {
     axios({
-      method: 'post',
-      url: 'http://localhost:8000/updateTransaction',
+      method: 'put',
+      url: 'http://localhost:8000/transaction/pay',
       data: { transactionId: selected }
     }).then((data) => {
 
@@ -88,8 +88,8 @@ export default function AdminButton() {
   }
   const handlerGetTransactions = (e: any) => {
     axios({
-      method: 'post',
-      url: 'http://localhost:8000/getTransactions',
+      method: 'get',
+      url: 'http://localhost:8000/transaction',
     }).then((data) => {
       setRowQuery(data.data.transactions)
       console.log(JSON.stringify(rowQuery))

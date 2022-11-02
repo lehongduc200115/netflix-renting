@@ -24,7 +24,7 @@ export const loadJsonConfigs = (): any => {
 
 export const loadConfigs = (): any => {
   const jsonConfigs = loadJsonConfigs();
-  return merge(jsonConfigs, {
+  const merged = merge(jsonConfigs, {
     serviceName: process.env.SERVICE_NAME || jsonConfigs.serviceName,
     serverHost: process.env.SERVER_HOST || jsonConfigs.server.host,
     serverPort: process.env.SERVER_PORT || jsonConfigs.server.port,
@@ -53,9 +53,13 @@ export const loadConfigs = (): any => {
       hostUrl: process.env.HOST_URL || jsonConfigs.hostUrl,
       callbackEndpoint:
         process.env.RUNDECK_CALLBACK_ENDPOINT ||
-        jsonConfigs.rundeckCallbackEndpoint
-    }
+        jsonConfigs.rundeckCallbackEndpoint,
+    },
+    mailUsername: process.env.MAIL_USERNAME,
+    mailPassword: process.env.MAIL_PASSWORD,
   });
+  console.log(`merged: ${JSON.stringify(merged)}`);
+  return merged;
 };
 
 export default loadConfigs();

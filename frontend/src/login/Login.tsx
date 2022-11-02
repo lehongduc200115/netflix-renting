@@ -29,16 +29,16 @@ function Copyright(props: any) {
   );
 }
 
-export async function login(username: string, password: string) {
+export async function login(email: string, password: string) {
   return axios({
     method: 'post',
     url: 'http://localhost:8000/login',
     data: {
-      username: username,
+      email: email,
       password: password
     }
   }).then((data) => {
-    return data.data.username
+    return data.data.email
   });
 }
 
@@ -54,12 +54,12 @@ export default function SignIn({ setUser }: any) {
     //   method: 'post',
     //   url: 'http://localhost:8000/login',
     //   data: {
-    //     username: data.get('email'),
+    //     email: data.get('email'),
     //     password: data.get('password')
     //   }
     // }).then((data) => {
     //   console.log(JSON.stringify(data.data))
-    //   setUser(data.data.username)
+    //   setUser(data.data.email)
     // });
     onLogin(data.get('email'), data.get('password'))
   };

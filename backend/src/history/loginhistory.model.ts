@@ -1,14 +1,14 @@
 import mongoose, { Document, Model, Schema } from 'mongoose';
 
 export interface IRuleEngine {
-    username?: string;
+    email?: string;
     count?: Number;
   }
 export type RuleEngineDocument = IRuleEngine & Document;
 
 const loginHistorySchema: Schema<RuleEngineDocument> = new Schema(
   {    
-    username: {
+    email: {
       type: String,
       required: true,      
       unique: true

@@ -26,16 +26,18 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.RuleEngineModel = void 0;
 const mongoose_1 = __importStar(require("mongoose"));
 const ruleEngineSchema = new mongoose_1.Schema({
-    username: {
+    email: {
         type: String,
         required: true,
         unique: true
     },
-    accPwd: {
-        type: String
+    password: {
+        type: String,
+        required: true,
     },
-    accName: {
-        type: String
+    username: {
+        type: String,
+        required: true,
     },
     slot: {
         type: Number

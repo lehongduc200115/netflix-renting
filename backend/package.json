@@ -34,11 +34,13 @@
     "joi": "^17.6.4",
     "lodash": "^4.17.21",
     "mongoose": "^6.7.0",
+    "nodemailer": "^6.8.0",
     "winston": "^3.8.2",
     "yargs": "^17.6.0"
   },
   "devDependencies": {
     "@types/hapi__hapi": "^20.0.13",
-    "@types/lodash": "^4.14.186"
+    "@types/lodash": "^4.14.186",
+    "@types/nodemailer": "^6.4.6"
   }
 }

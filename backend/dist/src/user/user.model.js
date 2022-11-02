@@ -23,37 +23,44 @@ var __importStar = (this && this.__importStar) || function (mod) {
     return result;
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.RuleEngineModel = void 0;
+exports.UserModel = void 0;
 const mongoose_1 = __importStar(require("mongoose"));
-const ruleEngineSchema = new mongoose_1.Schema({
-    username: {
+const enum_1 = require("../common/enum");
+const userSchema = new mongoose_1.Schema({
+    email: {
         type: String,
         required: true,
         unique: true
     },
     password: {
         type: String,
+        required: true,
         minlength: 6
     },
     status: {
         type: String,
+        default: enum_1.Status.ACTIVE,
+        required: true,
+        index: true,
+    },
+    isVerified: {
+        type: Boolean,
+        default: false,
+        required: true,
         index: true,
     },
     createdBy: {
-        type: String
+        type: String,
     },
     updatedBy: {
         type: String
     },
-    isTemplate: {
-        type: Boolean
-    }
 }, {
     timestamps: true,
     versionKey: false
 });
-ruleEngineSchema.set('toObject', {
+userSchema.set('toObject', {
     virtuals: true
 });
-exports.RuleEngineModel = mongoose_1.default.model("user", ruleEngineSchema, "user");
+exports.UserModel = mongoose_1.default.model("user", userSchema);
 //# sourceMappingURL=user.model.js.map

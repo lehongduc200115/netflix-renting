@@ -47,6 +47,7 @@ const start = async (module) => {
         })
             .catch((err) => {
             logger_1.default.error("Server cannot start", err.stack);
+            console.log(err);
             logger_1.default.on("finish", () => {
                 process.exit(1);
             });

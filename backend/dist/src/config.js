@@ -25,7 +25,7 @@ const loadJsonConfigs = () => {
 exports.loadJsonConfigs = loadJsonConfigs;
 const loadConfigs = () => {
     const jsonConfigs = (0, exports.loadJsonConfigs)();
-    return (0, lodash_1.merge)(jsonConfigs, {
+    const merged = (0, lodash_1.merge)(jsonConfigs, {
         serviceName: process.env.SERVICE_NAME || jsonConfigs.serviceName,
         serverHost: process.env.SERVER_HOST || jsonConfigs.server.host,
         serverPort: process.env.SERVER_PORT || jsonConfigs.server.port,
@@ -47,9 +47,13 @@ const loadConfigs = () => {
             accessToken: process.env.RUNDECK_ACCESS_TOKEN || jsonConfigs.rundeckAccessToken,
             hostUrl: process.env.HOST_URL || jsonConfigs.hostUrl,
             callbackEndpoint: process.env.RUNDECK_CALLBACK_ENDPOINT ||
-                jsonConfigs.rundeckCallbackEndpoint
-        }
+                jsonConfigs.rundeckCallbackEndpoint,
+        },
+        mailUsername: process.env.MAIL_USERNAME,
+        mailPassword: process.env.MAIL_PASSWORD,
     });
+    console.log(`merged: ${JSON.stringify(merged)}`);
+    return merged;
 };
 exports.loadConfigs = loadConfigs;
 exports.default = (0, exports.loadConfigs)();

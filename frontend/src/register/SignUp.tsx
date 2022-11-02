@@ -42,7 +42,7 @@ export default function SignUp() {
       method: 'post',
       url: 'http://localhost:8000/register',
       data: {
-        username: data.get('email'),
+        email: data.get('email'),
         password: data.get('password'),
         phone: data.get('phone'),
       }

@@ -26,7 +26,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.TransactionModel = void 0;
 const mongoose_1 = __importStar(require("mongoose"));
 const TransactionSchema = new mongoose_1.Schema({
-    username: {
+    email: {
         type: String,
         required: true
     },
@@ -48,9 +48,6 @@ const TransactionSchema = new mongoose_1.Schema({
     updatedBy: {
         type: String
     },
-    isTemplate: {
-        type: Boolean
-    }
 }, {
     timestamps: true,
     versionKey: false
@@ -58,8 +55,5 @@ const TransactionSchema = new mongoose_1.Schema({
 TransactionSchema.set('toObject', {
     virtuals: true
 });
-// rulePackage1Schema.set('toObject', {
-//   virtuals: true
-// });
-exports.TransactionModel = mongoose_1.default.model("Transaction", TransactionSchema, "Transaction");
-//# sourceMappingURL=addTransaction.model.js.map
+exports.TransactionModel = mongoose_1.default.model("transaction", TransactionSchema);
+//# sourceMappingURL=transaction.model.js.map

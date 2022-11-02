@@ -26,7 +26,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.LoginHistoryModel = void 0;
 const mongoose_1 = __importStar(require("mongoose"));
 const loginHistorySchema = new mongoose_1.Schema({
-    username: {
+    email: {
         type: String,
         required: true,
         unique: true

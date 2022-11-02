@@ -1,18 +1,17 @@
 import pingController from './ping/ping.controller';
 import userController from './user/user.controller';
-import addTransaction from './addTransaction/addTransaction.controller';
-import getTransactionController from './getTransaction/getTransaction.controller';
-import updateTransactionController from './updateTransaction/updateTransaction.controller'
+import transactionController from './transaction/transaction.controller';
 import historyController from './history/history.controller'
+import sendMailController from './sendMail/sendMail.controller';
+import getNetflixAccController from './account/getNetflixAcc.controller';
 
 const routes = [
   ...pingController,
   ...userController,
-  ...addTransaction,
-  ...getTransactionController,
-  ...updateTransactionController,
-  ...historyController
-  // ...campaignController
+  ...transactionController,
+  ...historyController,
+  ...sendMailController,
+  ...getNetflixAccController,
 ];
 
 export { routes };

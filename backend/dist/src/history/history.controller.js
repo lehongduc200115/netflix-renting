@@ -9,7 +9,7 @@ const postInitHistory = {
     options: {
         description: 'Post get login history',
         handler: async (_request, res) => {
-            // const {username} = _request.payload as any;
+            // const {email} = request.payload as any;
             await buyHistory_model_1.BuyHistoryModel.create({ pakageType: 1, count: 0 });
             await buyHistory_model_1.BuyHistoryModel.create({ pakageType: 2, count: 0 });
             await buyHistory_model_1.BuyHistoryModel.create({ pakageType: 3, count: 0 });
@@ -25,7 +25,7 @@ const postHistory = {
     options: {
         description: 'Post get login history',
         handler: async (_request, res) => {
-            // const {username} = _request.payload as any;
+            // const {email} = request.payload as any;
             const data = await loginhistory_model_1.LoginHistoryModel.find().limit(20).exec();
             return res.response({
                 data: data
@@ -39,7 +39,7 @@ const postBuyHistory = {
     options: {
         description: 'Post get buy history',
         handler: async (_request, res) => {
-            // const {username} = _request.payload as any;
+            // const {email} = request.payload as any;
             const data = await buyHistory_model_1.BuyHistoryModel.find().limit(20).exec();
             console.log("1");
             return res.response({
@@ -52,20 +52,6 @@ const postBuyHistory = {
         },
     }
 };
-// const postHistory: ServerRoute = {
-//   method: 'POST',
-//   path: `/getLoginHistory`,
-//   options: {
-//     description: 'Post get history',
-//     handler: async (_request: Request, res: ResponseToolkit) => {
-//      // const {username} = _request.payload as any;
-//       const data = await HistoryModel.find().limit(20).exec()      
-//         return res.response({          
-//           data: data
-//           }).code(201);
-//     },
-//   }
-// };
 const ruleEngineController = [
     postHistory,
     postInitHistory,
